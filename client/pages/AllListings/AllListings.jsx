@@ -5,16 +5,16 @@ export const AllListings = () => {
 
     const [items, setItems] = useState([]);
 
-    // const getAllItems = async () => {
-    //     try {
-    //         const res = await fetch('http://localhost:3000/api/listing/');
-    //         const data = await res.json();
-    //         setItems(data);
-    //         return 
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //     }
-    // }
+    const getAllItems = async () => {
+        try {
+            const res = await fetch('http://localhost:3000/api/listing/');
+            const data = await res.json();
+            setItems(data);
+            return 
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 
     // const getItemsByCategory = async (categoryId) => {
     //     try {
@@ -35,16 +35,8 @@ export const AllListings = () => {
         // }
     }
 
-    useEffect(async () => {
-        try {
-            const res = await fetch('http://localhost:3000/api/listing/');
-            const data = await res.json();
-            setItems(data);
-            return 
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-        // await getAllItems();
+    useEffect(() => {
+        getAllItems();
     }, [])
 
     return (
