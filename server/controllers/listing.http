@@ -1,1 +1,1 @@
-GET http://localhost:3000/listing/
+GET http://localhost:3000/api/listing/
