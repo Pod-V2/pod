@@ -16,7 +16,7 @@ categoryController.getAllCategories = async (req, res, next) => {
             GROUP BY category`
 
         const response = await client.query(listingsQuery);
-        res.locals.categories = response.rows;
+        res.locals.categories = response.rows.map(c => c.category);
 
     } catch (err) {
         console.log(err.message);
