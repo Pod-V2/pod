@@ -15,10 +15,11 @@ const cartRouter = require('./routes/cartRouter');
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
 
-app.use("/listing", listingRouter);
-app.use("/image", imageRouter);
-app.use("/auth", authRouter);
-app.use("/cart", cartRouter);
+
+app.use("/api/listing", listingRouter);
+app.use("/api/image", imageRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/cart", cartRouter);
 
 
 app.use((err, req, res, next) => {
