@@ -10,7 +10,9 @@ export const AllListings = () => {
             const res = await fetch('http://localhost:3000/api/listing/');
             const data = await res.json();
             setItems(data);
-            return 
+            return  () => {
+                setItems([])
+            }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
