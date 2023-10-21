@@ -82,6 +82,19 @@ listingController.getListing = async (req, res, next) => {
     }
 };
 
+/**
+ * 
+ * @param {*} req 
+ * @param {string} req.body.userid
+ * @param {string} req.body.product_title
+ * @param {string} req.body.price
+ * @param {string} req.body.description
+ * @param {string} req.body.category
+ * @param {string} req.body.img_url
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 listingController.createListing = async (req, res, next) => {
     const client = await pool.connect()
         .catch(err => next({
@@ -99,7 +112,6 @@ listingController.createListing = async (req, res, next) => {
         await client.query(createListingQuery, [
             req.body.name,
             req.body.price,
-            req.body.qty,
             req.body.category,
             req.body.sellerId,
             req.body.listingUrl
