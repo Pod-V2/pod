@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production nodemon server/server.js",
     "dev:webpack": "NODE_ENV=development webpack serve --open",
-    "dev:server": "NODE_ENV=development node server/server.js",
+    "dev:server": "NODE_ENV=development nodemon server/server.js",
     "dev": "npm run dev:webpack & npm run dev:server",
     "build": "webpack"
   },
@@ -16,10 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "@babel/preset-react": "^7.22.15",
+    "@google-cloud/storage": "^7.3.1",
     "@reduxjs/toolkit": "^1.9.7",
     "aws": "^0.0.3-2",
     "aws-sdk": "^2.1472.0",
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
