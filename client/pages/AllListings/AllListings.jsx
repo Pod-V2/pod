@@ -7,9 +7,12 @@ export const AllListings = () => {
 
     const getAllItems = async () => {
         try {
-            const res = await fetch('http://localhost:3000/listing/');
+            const res = await fetch('http://localhost:3000/api/listing/');
             const data = await res.json();
             setItems(data);
+            return  () => {
+                setItems([])
+            }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -25,17 +28,17 @@ export const AllListings = () => {
     //     }
     // }
 
-    const populateItems = () => {
+    const populateItems = async () => {
         // if (categoryId) {
         //     getItemsByCategory(categoryId);
         // }
         // else {
-            getAllItems();
+            await getAllItems();
         // }
     }
 
     useEffect(() => {
-        populateItems();
+        getAllItems();
     }, [])
 
     return (

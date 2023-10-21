@@ -12,6 +12,7 @@ const authRouter = require("./routes/authRouter");
 const listingRouter = require('./routes/listingRouter');
 const imageRouter = require('./routes/imageRouter');
 const cartRouter = require('./routes/cartRouter');
+const categoryRouter = require('./routes/categoryRouter')
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
 
@@ -20,6 +21,7 @@ app.use("/api/listing", listingRouter);
 app.use("/api/image", imageRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/categories", categoryRouter);
 
 
 app.use((err, req, res, next) => {
