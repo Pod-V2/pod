@@ -1,19 +1,58 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Category from "./category";
 
 import styled from "styled-components";
 
 const Categories = () => {
-const [category, setCategory] = useState([1,2,3,4,5,6,7,8]);
+/**
+   * Rather than having numbers, the state should be an array of categories that then generates a different button text for each Category component.
+   * Each button text would also need to be saved and used for future requests: For example, when clicking "Book," that needs to be passed in as a string 
+   * to the backend, so that the backend knows to use "Book" as the category SQL query. Then it would return all the listings that fall under the "Book"
+   * category as a response, which we would then use to render the listing page in a flexible manner. So I think the best way to do this is to apply the
+   * useEffect hook making a get request to /api/categories to hit the getAllCategories middleware, then put all of those in a state array and map it
+   * to components
+  */
+const [category, setCategory] = useState([]);
+
+useEffect(()=> {
+  fetch('/api/categories')
+  .then ((data => data.json()))
+  .then ((data) => {
+    console.log(`Here is the GET request to /categories: ${data}`)
+    console.log(Array.isArray(data))
+    setCategory(data)
+    console.log(`Category array is currently: ${category}`)
+  })
+}, [])
+
+//Pulled the category component logic into this file for easier/cleaner implementation.
 
 return (
     <Container>
         
     {
-        category.map((ct, i) => {
-          return  <Category ct={ct} key={i} />
-        })
+      category.map((element) => {
+        //Add a handleClick function that will redirect to the appropriate listing page.
+        return <Box>
+          <div className="category">
+                <div className="categoryCard">
+                    <img></img>
+                    {/* <FaRegBookmark />
+                    <FaFireAlt /> */}
+
+                </div>
+            </div>
+            <p></p>
+            <p></p>
+            
+            <Button>{element}</Button>
+        </Box>
+      })
+      
+        // category.map((ct, i) => {
+        //   return  <Category ct={ct} key={i} />
+        // })
     }
     </Container>
 )
@@ -31,6 +70,32 @@ align-items: space-between;
     display : grid;
     grid-template-columns: repeat(2, minmax(50px, 1fr));
 }
+`
+
+const Box = styled.div`
+height : 10rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+width : 14rem;
+padding-right: 5px;
+background-color : #F7F7F7;
+transition: 0.2s;
+position: relative;
+
+flex: 1 0 25rem;
+transition: 0.2s;
+
+@media(max-width: 1020px) {
+  
+}`
+
+const Button = styled.button`
+height: 1.5rem;
+margin-bottom: 1rem;
+border: none;
+color: blue;
+background-color: #F7F7F7;
 `
 
 export default Categories;
