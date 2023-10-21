@@ -83,7 +83,7 @@ listingController.getListing = async (req, res, next) => {
 };
 
 /**
- * 
+ * Create a new listing
  * @param {*} req 
  * @param {string} req.body.userid
  * @param {string} req.body.product_title
