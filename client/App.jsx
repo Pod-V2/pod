@@ -5,14 +5,19 @@ import Pages from "./pages/pageLayout/Layout";
 import { AllListings } from "./pages/AllListings/AllListings.jsx";
 import Login from "./pages/SignInUp/Login";
 import SignUp from "./pages/SignInUp/SignUp";
+import styled from "styled-components";
 
 const App  = () => {
 
     return (
-        <div>
+        <MainContainer>
             <Pages/>
-        </div>
+        </MainContainer>
     )
 }
+
+const MainContainer = styled.div`
+min-height: 100%,
+`
 
 export default App;
