@@ -11,22 +11,20 @@ listingController.getAllListings = async (req, res, next) => {
             }
         }));
     try {
-        const listingsQuery = `SELECT l.product_name AS listing,
+        const listingsQuery = `SELECT l.product_title AS listing,
             l.price,
-            l.quantity,
             l.category,
-            u.username AS seller,
-            u.city,
-            u.state,
+            u.name AS seller,
             l.img_url
         FROM listings l
         JOIN users u
-          ON l.seller_id = u._id;`;
+          ON l.userid = u.userid;`;
 
         const response = await client.query(listingsQuery);
         res.locals.listings = response.rows;
 
     } catch (err) {
+        console.log(err.message);
         return next({
             log: `listingController.getAllListings - querying listings from db ERROR: ${err}`,
             message: {

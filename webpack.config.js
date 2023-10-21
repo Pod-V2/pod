@@ -11,11 +11,6 @@ module.exports = {
         publicPath: '/',
     },
     mode : "development",
-    devServer: {
-        port: 3000,
-        hot: true,
-        open: true
-    },
     module: {
         rules: [
             {
@@ -48,11 +43,11 @@ module.exports = {
     ],
     devServer: {
         static: {
-            publicPath: '/',
-            directory: path.join(__dirname, '/dist')
+            publicPath: '/dist',
+            directory: path.join(__dirname, 'dist')
         },
         proxy: {
-            '/': 'http://localhost:3000',
+            '/api': 'http://localhost:3000',
         },
         hot: true,
         open : true,
