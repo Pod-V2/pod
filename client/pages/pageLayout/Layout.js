@@ -9,6 +9,7 @@ import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart";
+import { ProductDetails } from "../ProductDetails/ProductDetails.jsx";
 
 
 const Pages = () => {
@@ -34,6 +35,7 @@ const Pages = () => {
                     <Route path ='/login' element={<Login/>}/>
                     <Route path ='/signup' element={<SignUp/>}/>
                     <Route path ='/listing' element={<AllListings/>}/>
+                    <Route path ='/listing/create' element={<ProductDetails/>}/>
                     <Route path="/cart"  element={<Cart/>}/>
                     <Route />
                 </Route>
