@@ -19,7 +19,7 @@ const Category = ({ct}) => {
             <p></p>
             <p></p>
             
-            <Button>See All</Button>
+            <button>See All</button>
         </Box>
     )
 }
