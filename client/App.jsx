@@ -7,12 +7,11 @@ import Login from "./pages/SignInUp/Login";
 import SignUp from "./pages/SignInUp/SignUp";
 
 const App  = () => {
-
-    return (
-        <div>
-            <Pages/>
-        </div>
-    )
+  return (
+    <div>
+      <Pages/>
+    </div>
+  )
 }
 
 export default App;
