@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 /**
  *
  * @param {*} props
- * @param {number} props.listingUrl Generated listing id
+ * @param {string} props.imageUrl - imageUrl state variable from parent component
+ * @param {function} props.setImageUrl - setter for imageUrl
  * @returns
  */
 export const ListingInputsImage = (props) => {
   const [inputs, setInputs] = useState({});
+  const {imageUrl, setImageUrl} = props;
 
   const handleChange = (event) => {
     setInputs(event.target.files);
@@ -16,10 +18,11 @@ export const ListingInputsImage = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const file = inputs[0];
+    console.log(file)
 
     const validImageTypes = ["image/jpg", "image/jpeg", "image/png"];
     if (!file || !validImageTypes.includes(file.type)) {
-      alert("Invalid file type. Please choose an image file.");
+      alert("Invalid file type. Please choose an image file (jpg, png).");
       return;
     }
 
@@ -28,11 +31,13 @@ export const ListingInputsImage = (props) => {
     // Upload the file as a POST request
     fetch("http://localhost:3000/api/image", {
       method: "POST",
-      body: file,
+      body: file
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log("Image successfully uploaded!")
+        setImageUrl(data.url);
+        console.log(imageUrl)
       })
       .catch((error) => console.error(error));
 
@@ -58,7 +63,7 @@ export const ListingInputsImage = (props) => {
   return (
     <div>
       <label>
-        Upload Image:{" "}
+        Upload Image &lt;3mb:{" "}
         <input
           className="input"
           type="file"
@@ -69,6 +74,9 @@ export const ListingInputsImage = (props) => {
         />
       </label>
       <input type="button" value="Upload" onClick={handleSubmit} />
+      <div>
+        {imageUrl !== '' ? <img src={imageUrl}/> : <></>}
+      </div>
     </div>
   );
 };

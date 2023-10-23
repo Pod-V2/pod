@@ -105,16 +105,17 @@ listingController.createListing = async (req, res, next) => {
         }));
     try {
         const createListingQuery = `INSERT INTO listings
-                (product_name, price, quantity, category, seller_id, img_url)
+                (product_title, price, category, userid, description, img_url)
             VALUES ($1, $2, $3, $4, $5, $6)`;
-        console.log('request body: ', req.body);
+        // console.log('request body: ', req.body);
 
         await client.query(createListingQuery, [
-            req.body.name,
+            req.body.product_title,
             req.body.price,
             req.body.category,
-            req.body.sellerId,
-            req.body.listingUrl
+            req.body.userid,
+            req.body.description,
+            req.body.img_url
         ]);
     } catch (err) {
         return next({

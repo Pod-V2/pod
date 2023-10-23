@@ -1,36 +1,33 @@
 const { Storage } = require("@google-cloud/storage");
-const path = require("path");
-const serviceKey = path.join("../gcs_key.json");
+const serviceKey = "./gcs_key.json";
+require('dotenv').config();
 
 const storage = new Storage({
   keyFilename: serviceKey,
-  projectId: "pod-402500",
+  projectId: process.env.GC_PROJECT_ID,
 });
 
-const bucket = storage.bucket("pod-ninja-turtle");
+const bucket = storage.bucket(process.env.BUCKET_NAME);
 
-function uploadImage(file) {
-  console.log("Invoking Google Cloud uploadImage")
-  console.log(file)
-  // return new Promise((resolve, reject) => {
-  //   const { originalname, buffer } = file;
+/**
+  * Receive a file as Buffer and file info as file-type output.
+  * Upload file to Google Cloud Storage bucket.
+  * @param {Buffer} file - image file to be uploaded
+  * @param {Object} fileInfo - output from file-type 
+  * @param {string} fileInfo.ext - file extension
+  * @param {string} userid - user ID to generate unique file name
+  */
+async function uploadImage(file, fileInfo, userid='') {
+  // Generate file name as timestamp
+  const fileName = `${userid}${Date.now()}.${fileInfo.ext}`;
 
-  //   const blob = bucket.file(originalname.replace(/ /g, "_"));
-  //   const blobStream = blob.createWriteStream({
-  //     resumable: false,
-  //   });
-  //   blobStream
-  //     .on("finish", () => {
-  //       const publicUrl = format(
-  //         `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-  //       );
-  //       resolve(publicUrl);
-  //     })
-  //     .on("error", () => {
-  //       reject(`Unable to upload image, something went wrong`);
-  //     })
-  //     .end(buffer);
-  // });
+  // Create reference to file on GCS and save
+  const cloudFile = bucket.file(fileName);
+  await cloudFile.save(file)
+
+  // Generate image URL - need public bucket
+  const imageUrl = process.env.BUCKET_URL+fileName;
+  return imageUrl;
 }
 
 module.exports = uploadImage;

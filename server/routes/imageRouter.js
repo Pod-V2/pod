@@ -12,7 +12,7 @@ router.post(
   "/",
   bodyParser.raw({
     type: ["image/jpg", "image/jpeg", "image/png"],
-    limit: "5mb",
+    limit: "3mb",
   }),
   imageController.upload,
   (req, res, next) => {

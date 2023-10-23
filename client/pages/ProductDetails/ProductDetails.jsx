@@ -7,12 +7,7 @@ import ListingInputsImage from "./components/ListingInputsImage.jsx";
  * @returns
  */
 export const ProductDetails = (props) => {
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
-
-  const randomNumber = getRandomInt(10000);
-
+  const [imageUrl, setImageUrl] = useState('');
   /**
    * Submit inputs state variable to /api/listing to create a new listing
    * @param {*} event
@@ -22,14 +17,19 @@ export const ProductDetails = (props) => {
     console.log("Outer form submission")
     const formData = new FormData(e.target);
 
-    // Create object from FormData obj and change types if needed
+    // Make sure there is an image
+    if (!imageUrl){
+      alert('Please upload a product image in jpg or png format.');
+    }
+
+    // Create inputs object from FormData obj and change types if needed
     const inputs = Object.fromEntries(formData.entries());
     inputs.price = parseFloat(inputs.price);
-    inputs.returned = false;
+    inputs['img_url'] = imageUrl;
 
+    // Send POST request to server to add new listing
     // Stringify to send in POST request body
     console.log("asdads", inputs);
-
     fetch("http://localhost:3000/api/listing/", {
       method: "POST",
       body: JSON.stringify(inputs),
@@ -49,6 +49,7 @@ export const ProductDetails = (props) => {
   };
 
   /**
+   * Request schema
    * @param {string} req.body.userid
    * @param {string} req.body.product_title
    * @param {string} req.body.price
@@ -100,7 +101,7 @@ export const ProductDetails = (props) => {
           />
         </label>
         <div>
-          <ListingInputsImage listingUrl={randomNumber} />
+          <ListingInputsImage imageUrl={imageUrl} setImageUrl={setImageUrl} />
         </div>
         <input className="listingsInputs" type="submit" value="Submit" />
       </form>
