@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production nodemon server/server.js",
-    "dev:webpack": "NODE_ENV=development webpack serve --open",
-    "dev:server": "NODE_ENV=development nodemon server/server.js",
+    "dev:webpack": "webpack-dev-server",
+    "dev:server": "NODE_ENV=development node server/server.js",
     "dev": "npm run dev:webpack & npm run dev:server",
     "build": "webpack"
   },
@@ -16,7 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "@babel/preset-react": "^7.22.15",
-    "@google-cloud/storage": "^7.3.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.14",
+    "@mui/material": "^5.14.14",
     "@reduxjs/toolkit": "^1.9.7",
     "aws": "^0.0.3-2",
     "aws-sdk": "^2.1472.0",
@@ -40,7 +43,7 @@
     "react-router-dom": "^6.16.0",
     "react-use-cart": "^1.13.0",
     "sass": "^1.69.2",
-    "styled-components": "^6.0.8"
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
