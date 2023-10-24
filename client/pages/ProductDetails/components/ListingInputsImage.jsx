@@ -30,6 +30,10 @@ export const ListingInputsImage = (props) => {
       alert("Invalid file type. Please choose an image file (jpg, png).");
       return;
     }
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      console.log('asdads', inputs);
 
     console.log("asdads", inputs[0]);
 
