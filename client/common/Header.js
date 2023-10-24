@@ -4,28 +4,24 @@ import styled from "styled-components";
 import { NavLink, Navlist } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
 const links = [
-    {name: "Signup", path:"/signup"},
-    {name:"Login", path: "/login"},
-    {name: "listing", path: "/listing"},
     {name:"Cart", path: "/cart"}
-
 ]
 
 const Navigation = () => {
 
-    return (
-        <NavContainer>
-            {
-                links.map((link, index) => (
-                    <li key={index}>
-                        <StyledNavLink to={link.path} exact="true">
-                            {link.name}
-                        </StyledNavLink>
-                    </li>
-                ))
-            }
-        </NavContainer>
-    )
+  return (
+    <NavContainer>
+      {
+        links.map((link, index) => (
+          <li key={index}>
+            <StyledNavLink to={link.path} exact="true">
+              {link.name}
+            </StyledNavLink>
+          </li>
+        ))
+      }
+    </NavContainer>
+  )
 }
 
 
