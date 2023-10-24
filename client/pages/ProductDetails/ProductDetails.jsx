@@ -14,16 +14,7 @@ import { ListingForm } from "./components/ListingForm.jsx";
  */
 export const ProductDetails = (props) => {
   const [imageUrl, setImageUrl] = useState("");
-  /**
-   * Submit inputs state variable to /api/listing to create a new listing
-   * @param {*} event.target Form data to be submitted
-   * @param {number} event.target.userid user ID, should be provided in cookie
-   * @param {string} event.target.product_title Short name for product
-   * @param {number} event.target.price Price
-   * @param {string} event.target.description Long description of product
-   * @param {string} event.target.category Product category
-   * @param {string} event.target.img_url Image URL given after image upload
-   */
+
   return (
     <Box display="flex" alignItems="center" justifyContent="center">
       <Card sx={{ maxWidth: 600 }}>
