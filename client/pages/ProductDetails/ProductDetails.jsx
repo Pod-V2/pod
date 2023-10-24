@@ -1,111 +1,38 @@
 import React, { useEffect, useState } from "react";
 import ListingInputsImage from "./components/ListingInputsImage.jsx";
+import { CardContent, FormControl, FormLabel } from "@mui/material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import { ListingForm } from "./components/ListingForm.jsx";
 
 /**
  * Product creation details page
- * @param {*} props
+ * @param {*} props no props needed
  * @returns
  */
 export const ProductDetails = (props) => {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
   /**
    * Submit inputs state variable to /api/listing to create a new listing
-   * @param {*} event
-   */
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Outer form submission")
-    const formData = new FormData(e.target);
-
-    // Make sure there is an image
-    if (!imageUrl){
-      alert('Please upload a product image in jpg or png format.');
-    }
-
-    // Create inputs object from FormData obj and change types if needed
-    const inputs = Object.fromEntries(formData.entries());
-    inputs.price = parseFloat(inputs.price);
-    inputs['img_url'] = imageUrl;
-
-    // Send POST request to server to add new listing
-    // Stringify to send in POST request body
-    console.log("asdads", inputs);
-    fetch("http://localhost:3000/api/listing/", {
-      method: "POST",
-      body: JSON.stringify(inputs),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        console.log("Response from backend:", inputs);
-      })
-      .catch((error) => {
-        console.log(inputs);
-        console.error("Error:", error);
-      });
-  };
-
-  /**
-   * Request schema
-   * @param {string} req.body.userid
-   * @param {string} req.body.product_title
-   * @param {string} req.body.price
-   * @param {string} req.body.description
-   * @param {string} req.body.category
-   * @param {string} req.body.img_url
+   * @param {*} event.target Form data to be submitted
+   * @param {number} event.target.userid user ID, should be provided in cookie
+   * @param {string} event.target.product_title Short name for product
+   * @param {number} event.target.price Price
+   * @param {string} event.target.description Long description of product
+   * @param {string} event.target.category Product category
+   * @param {string} event.target.img_url Image URL given after image upload
    */
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Product Name:{" "}
-          <input
-            className="input"
-            type="text"
-            name="product_title"
-          />
-        </label>
-        <label>
-          Price:{" "}
-          <input
-            className="input"
-            type="number"
-            name="price"
-          />
-        </label>
-        <label>
-          Category:{" "}
-          <input
-            className="input"
-            type="text"
-            name="category"
-          />
-        </label>
-        <label>
-          Seller:{" "}
-          <input
-            className="input"
-            type="text"
-            name="userid"
-          />
-        </label>
-        <label>
-          Description:{" "}
-          <input
-            className="input"
-            type="text"
-            name="description"
-          />
-        </label>
-        <div>
-          <ListingInputsImage imageUrl={imageUrl} setImageUrl={setImageUrl} />
-        </div>
-        <input className="listingsInputs" type="submit" value="Submit" />
-      </form>
-    </div>
+    <Box display="flex" alignItems="center" justifyContent="center">
+      <Card sx={{ maxWidth: 600 }}>
+      <h1>Create a new listing:</h1>
+        <CardContent>
+          <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl}/>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 

@@ -16,9 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "@babel/preset-react": "^7.22.15",
-    "@google-cloud/storage": "^7.3.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@google-cloud/storage": "^7.3.1",
     "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.14",
     "@reduxjs/toolkit": "^1.9.7",
@@ -34,6 +34,7 @@
     "file": "^0.2.2",
     "file-type": "^10.11.0",
     "loader": "^2.1.1",
+    "mui-image": "^1.0.7",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",

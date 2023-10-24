@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "mui-image";
 
 /**
  *
@@ -75,7 +76,7 @@ export const ListingInputsImage = (props) => {
       </label>
       <input type="button" value="Upload" onClick={handleSubmit} />
       <div>
-        {imageUrl !== '' ? <img src={imageUrl}/> : <></>}
+        {imageUrl !== '' ? <Image src={imageUrl} width="50ch"/> : <></>}
       </div>
     </div>
   );
