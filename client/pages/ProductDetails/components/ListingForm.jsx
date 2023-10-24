@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ListingInputsImage from "./ListingInputsImage.jsx";
 import { FormControl, FormLabel } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import { debounce_leading } from "../debounce.js";
 
 /**
  * Product creation details page
@@ -65,6 +66,8 @@ export const ListingForm = ({ imageUrl, setImageUrl }) => {
       });
   };
 
+  const debouncedSubmit = useCallback(debounce_leading(handleSubmit), [])
+
   /**
    * Request schema
    * @param {string} req.body.userid
@@ -80,7 +83,7 @@ export const ListingForm = ({ imageUrl, setImageUrl }) => {
       sx={{
         "& .MuiTextField-root": { m: 1, width: "50ch" },
       }}
-      onSubmit={handleSubmit}
+      onSubmit={debouncedSubmit}
     >
       <Stack sx={{ width: "100%" }} spacing={2}>
         {submitStatus === "error" && (

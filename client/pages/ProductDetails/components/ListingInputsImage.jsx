@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "mui-image";
+import { debounce_leading } from "../debounce";
 
 /**
  *
@@ -14,7 +15,10 @@ export const ListingInputsImage = (props) => {
 
   const handleChange = (event) => {
     setInputs(event.target.files);
+    console.log(event.target.files)
+    console.log(inputs)
   };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,6 +42,7 @@ export const ListingInputsImage = (props) => {
       .then((data) => {
         console.log("Image successfully uploaded!")
         setImageUrl(data.url);
+        console.log("Image URL")
         console.log(imageUrl)
       })
       .catch((error) => console.error(error));
@@ -61,6 +66,12 @@ export const ListingInputsImage = (props) => {
     // }
   };
 
+  const debouncedSubmit = useCallback((e) => {
+    e.preventDefault();
+    console.log(e.target)
+    debounce_leading(handleSubmit(e))}
+    , [inputs])
+
   return (
     <div>
       <label>
@@ -74,7 +85,7 @@ export const ListingInputsImage = (props) => {
           multiple
         />
       </label>
-      <input type="button" value="Upload" onClick={handleSubmit} />
+      <input type="button" value="Upload" onClick={debouncedSubmit} />
       <div>
         {imageUrl !== '' ? <Image src={imageUrl} width="50ch"/> : <></>}
       </div>
