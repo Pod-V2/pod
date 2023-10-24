@@ -1,61 +1,127 @@
-import React from "react";
-import { useState } from "react";
-import styled from "styled-components";
-import { TextField, Button, FormControl } from '@material-ui/core';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
 
-  const [email, setEmail] = useState('')
-  const [fullname, setfullname] = useState('')
-  const [password, setPassword] = useState('')
-  // const [username, setUsername] = useState('')
-  // const [lastName, setlastName] = useState('')
-  // const [city, setCity] = useState('')
-  // const [zip, setZip] = useState('')
-  // const [state, setState] = useState('')
-  // const [phoneNumber, setPhoneNumber] = useState('')
-  // const [address, setaddress] = useState('')
-  
 
-  const handleSubmit = async(e) =>{
-    e.preventDefault()
+const defaultTheme = createTheme();
+
+
+export default function SignUp() {
+  const navigate = useNavigate();
+  const signupUser = async(event) => {
+    event.preventDefault();
+    try {
+      
+      const data = new FormData(event.currentTarget);
+
+      const user = {
+      "name": data.get('name'),
+      "email": data.get('email'),
+      "password": data.get('password')
+      }
+      fetch('/api/auth/register', {
+        method: "POST",
+        mode: 'cors',
+        headers: {
+        "Content-Type": "application/json",
+          },
+        body: JSON.stringify(user)
+    })
+      .then((res) => {
+        if(res.ok) {
+            navigate('/login')
+        }
+      })
+  } catch (err) {
+      console.error("Error:", err)
   }
-  // console.log('test')
-  return (
-  <div>
-    <StyledH3 >New here? Sign Up!</StyledH3>
-    <StyledContainer id='Signup Container'>
-      <FormControl onSubmit={handleSubmit}>
-        <TextField label="Full Name" variant="filled" type="text"
-          onChange={e => setFirstName(e.target.value)}
-          value={firstName}
-        />
-        <TextField label="Email" variant="filled" type="email"
-          onChange={e => setEmail(e.target.value)}
-          value={email}
-        />
-        <TextField label="Password" variant="filled" type="password"
-          onChange={e => setPassword(e.target.value)}
-          value={password}
-        />
-        <Button className="signup">Signup</Button>
-      </FormControl>
-    </StyledContainer>
+}
+    
 
-  </div>
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate onSubmit={signupUser} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} >
+                <TextField
+                  autoComplete="given-name"
+                  name="name"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Full Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Log in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
-
-const StyledContainer = styled.div`
-  display: grid;
-  justify-content: center;
-  min-height: 500px
-`
-
-const StyledH3 = styled.h3`
-  display: grid;
-  justify-content: center;
-  text-align: center
-`
- 
-export default SignUp;
