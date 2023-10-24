@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "pod-402500",
+    "private_key_id": "c3403e0186eec3ac1933f97ea015b7684e5e2543",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDMfZVJFVeG2B5l\n3UkB9g1BVCOMhk1VVOOp+vG/nzGlMgnHctr2/XWDU75Av4C6NdUqM4qbXnljoM5U\no/hOwmoP1IzIlinagBk3dIE6oygMvScVVYp7qMjvjedpQJX6qtmwzdZqIsYyDXcA\nvr3NT7LMvtKp3JJ4iCegt5CCueNSo8BiiTC434Iu7QBIRKY1z/rPQvP/HCcEcx9k\nO2VDZzt6gN4jhNG1zEi8X68lB8bjxYi5C8NNRrTUjRKyBklupRPC/pIYZRf9KLLV\nYhS0gWarK3dveWdpVF0dK6qyB5G74ZDxlMWuSpbQx9YtjY0uyAxaTicjfL+BwatD\njsCAxWCRAgMBAAECggEAHeRNqj1Aaim1Z9aNEYhSL7aI68XGEC80iGhyZjxzGV7T\nJyCW+XvbbbMUIIrd2lp8KosWO9f3jqS3BJBjf7/TmTTMz5WD0Ljg9sZFDblD5XjQ\n+cFjWOg3Vy07IpuaUOYgpEOykBk9N5vYRXecbyKzVFKgoMvpbU0Z3dh3e2SI4k9i\njLIvNl0O8s7G1WBa7qoZf7QGT2SBKEjfEt3zCKEfDZceObPuzgMMz8TxTTyST0j6\n9mgcBRUijqNGEF0xf3x1pgqRNekf07yIOd95alqunHaoNlMVTLyou1mYEeZpDZcj\nPYzHQio7h8+Olr4HslVIM0NE6rYMWQmFmAtrBwt7QQKBgQDz6jkxjSErPa7Up9Up\n562RK4PR9v/h46qXRdKO3FcrRQ2ZJicCgm/PFFibtXMy5rjnlLaT7gSXoubvL2MF\nZl0KpE7isGRnU5zlAVxyinDeKBFk6Np2lxIyZaavCgzovujUnCnDyStz2pPA17w6\npWvaksxAb73NWEbhURBprCwn5QKBgQDWn063bvg9FCZKTMNHUHVau9zmuUH8vi1Y\ndAAkXOd0L0yv9sncZycrOyra8KcVAfw3H8LlRBPXL/8oppKKj6hrZCiY1v+TI0iS\nVV26szN11E3J6/iGJoq0mpjhRJzW1/uZeCgStHJ3B2/gk8wFCDYuWCSU/Fn17Xb6\nOCiIJcRzPQKBgGniigWKwJVm55iFazIP0vcsLsNdOGO1U37r3qYJ3QV5qpeLSm/6\nc9Mvf+/Ia0PziN1vX3sEXpX9L8cxiQj1EPrnrR8Xd96rG3cGij1m/+xQ9Iwb0Yqd\ntlaObjeaY1Q+XBC/4hmOIQDgKDgU7y9+VD3EcEqgt4KHCe4SJM/a4ChJAoGAaeoY\nWKHk04+cDdKwFAN6xporO5l1HRtlGV+1qjxG5Klq+PObTq+BPu5mCcH1UoK2SyXb\ncnUULX+8Nf1uF/8pKEY3WqXPXndtGvoR1U8WODHbaaiP7vQaQ2J/y7umgsf3nBcV\n/5UZX/BFn9iQOHOC+X/6HaQjaSAVNQp9xiKNPikCgYEA0vAAFZEUo3KY8PPfuWAk\n+1Y/HWZUKW7bQ5bqR0Ywnv0+pVs6szBLoDzVn11KDOWkw/OlFeo5YZ8z/MlUr2WB\n/3K4eAiVB9v5Yzve/WQVQd410NEtqm6h+S4PIfJjA/q8tabmOBrVdTSkYtcvR+6d\ntRlBgX0Ybyaiy2/CZh1fCLQ=\n-----END PRIVATE KEY-----\n",
+    "client_email": "pod-v2-team@pod-402500.iam.gserviceaccount.com",
+    "client_id": "108693621300498506049",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pod-v2-team%40pod-402500.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }

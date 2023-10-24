@@ -10,6 +10,7 @@ import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart";
 import LandingPage from "../LandingPage/LandingPage.jsx";
+import ListingsByCategory from "../Home/ListingsByCategory.jsx";
 
 
 const Pages = () => {
@@ -35,6 +36,7 @@ const Pages = () => {
           <Route path ='/signup' element={<SignUp/>}/>
           <Route path ='/listing' element={<AllListings/>}/>
           <Route path="/cart"  element={<Cart/>}/>
+          <Route path="/ListingsByCategory" element={<ListingsByCategory/>}/>
         </Routes>
       </Router>
     </>
