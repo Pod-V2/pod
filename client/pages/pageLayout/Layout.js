@@ -9,41 +9,36 @@ import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart";
+import LandingPage from "../LandingPage/LandingPage.jsx";
 
 
 const Pages = () => {
 
-    const Page = () => {
-        return (
-            <div>
-                <Header />
-                <Outlet />
-                <Footer />
-            </div>
-        )
-    }
-
-
+  const Page = () => {
     return (
-        <>
-        <Router>
-            <Routes>
-
-                <Route path="/" element={<Page />}>
-                    <Route path ="" element={<Home />} />
-                    <Route path ='/login' element={<Login/>}/>
-                    <Route path ='/signup' element={<SignUp/>}/>
-                    <Route path ='/listing' element={<AllListings/>}/>
-                    <Route path="/cart"  element={<Cart/>}/>
-                    <Route />
-                </Route>
-            </Routes>
-            <Routes>
-                    
-                </Routes>
-        </Router>
-        </>
+      <PageContainer>
+          <Header />
+          <Outlet />
+          <Footer />
+      </PageContainer>
     )
+  }
+
+
+  return (
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path ="/home" element={<Home />} />
+          <Route path ='/login' element={<Login/>}/>
+          <Route path ='/signup' element={<SignUp/>}/>
+          <Route path ='/listing' element={<AllListings/>}/>
+          <Route path="/cart"  element={<Cart/>}/>
+        </Routes>
+      </Router>
+    </>
+  )
 }
 
 
