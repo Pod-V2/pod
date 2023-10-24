@@ -13,7 +13,9 @@ router.get("/:id", listingController.getListing, (req, res) => {
 });
 
 router.post("/", listingController.createListing, (req, res) => {
-  return res.status(200).send('New listing posted');
+  return res
+    .status(200)
+    .json({ status: "success", message: "Successfully created new listing!" });
 });
 
 router.patch("/:id", listingController.updateListing, (req, res) => {

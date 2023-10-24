@@ -10,19 +10,19 @@ import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart";
 import LandingPage from "../LandingPage/LandingPage.jsx";
-
+import { ProductDetails } from "../ProductDetails/ProductDetails.jsx";
 
 const Pages = () => {
 
-  const Page = () => {
-    return (
-      <PageContainer>
-          <Header />
-          <Outlet />
-          <Footer />
-      </PageContainer>
-    )
-  }
+    const Page = () => {
+        return (
+            <PageContainer>
+                <Header />
+                <Outlet />
+                <Footer />
+            </PageContainer>
+        )
+    }
 
 
   return (
@@ -34,6 +34,7 @@ const Pages = () => {
           <Route path ='/login' element={<Login/>}/>
           <Route path ='/signup' element={<SignUp/>}/>
           <Route path ='/listing' element={<AllListings/>}/>
+          <Route path ='/listing/create' element={<ProductDetails/>}/>
           <Route path="/cart"  element={<Cart/>}/>
         </Routes>
       </Router>
