@@ -65,11 +65,9 @@ export default function Signup() {
   return (
     <LandingPageContainer>
       <LandingPageNavbar>
-        {LandingPageNav.map((page, index) => (
-          <Link key={index} to={`/${page.toLowerCase()}`}>
-            {page.toUpperCase()}
+          <Link key='login' onClick={() => navigate('/login')}>
+            Login
           </Link>
-        ))}
       </LandingPageNavbar>
       <LandingPageBody>
       <Container component="main" >

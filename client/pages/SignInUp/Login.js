@@ -20,21 +20,17 @@ import { useNavigate } from 'react-router-dom';
 
 export default function loginUser() {
   // Array for Landing Page Nav Links
-  const LandingPageNav = ['Login', 'Signup'];
-
   const navigate = useNavigate();
-    const signupUser = async(event) => {
-    event.preventDefault();
+  const login = async(event) => {
+  event.preventDefault();
   try {
     const data = new FormData(event.currentTarget);
-
-
     const user = {
-      "name": data.get('name'),
       "email": data.get('email'),
       "password": data.get('password')
     }
-    fetch('/api/auth/register', {
+
+    fetch('/api/auth/login', {
       method: "POST",
       mode: 'cors',
       headers: {
@@ -44,7 +40,7 @@ export default function loginUser() {
     })
     .then((res) => {
       if(res.ok) {
-      navigate('/login')
+        navigate('/home')
       }
     })
   } catch (err) {
@@ -56,11 +52,9 @@ export default function loginUser() {
   return (
     <LandingPageContainer>
       <LandingPageNavbar>
-        {LandingPageNav.map((page, index) => (
-          <Link key={index} to={`/${page.toLowerCase()}`}>
-            {page.toUpperCase()}
+          <Link key='login' onClick={() => navigate('/signup')}>
+            Sign up
           </Link>
-        ))}
       </LandingPageNavbar>
       <LandingPageBody>
       <Container component="main" maxWidth="xs">
@@ -84,7 +78,7 @@ export default function loginUser() {
         <Typography component="h1" variant="h5" color='black'>
         Log in
         </Typography>
-          <Box component="form" noValidate onSubmit={loginUser} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={login} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
           <Grid item xs={12}>
           <TextField
