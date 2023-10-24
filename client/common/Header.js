@@ -1,3 +1,5 @@
+// OLD HEADER: DO NOT USE
+
 import React from "react";
 import cart from "../assets/cart.png";
 import styled from "styled-components";
