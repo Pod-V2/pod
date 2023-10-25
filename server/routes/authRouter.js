@@ -5,11 +5,11 @@ const authController = require("../controllers/authController");
 const passport = require("passport");
 
 router.post("/login", authController.verifyUser, (req, res) => {
-  res.status(200).send('Login successful');
+  return res.sendStatus(200);
 });
 
-router.post("/register", authController.createUser, (req, res) => 
-  res.status(200).send('Account creation success')
-);
+router.post("/register", authController.createUser, (req, res) => {
+ return res.sendStatus(200);
+});
 
 module.exports = router;
