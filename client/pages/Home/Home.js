@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Categories from "./components/categories";
 // import {createSlice} from "@reduxjs/toolkit";
 import {BiSearch} from "react-icons/bi"
+import Header from "../../common/Header.jsx";
 // const initialState = {
 //     cartItems: [],
 //     cartTotalQuantity : 0,
@@ -20,37 +21,40 @@ import {BiSearch} from "react-icons/bi"
 // })
 
 const Home = () => {
-    return (
-        <>
-        <Text>
-        <h1>
-            Welcome to the <strong>Best</strong> Online Retailing platform
-        </h1>
-        </Text>
-        
-        <Search>
+  return (
+    <>
+      <Header />
+
+      <Text>
+        <h1>Welcome to POD V2</h1>
+        <p>Search by categories below</p>
+      </Text>
+
+      <Search>
         <span>All Categories</span>
-            <hr />
-           <input type="text" placeholder="search"></input>
-           <button>
-            <BiSearch />
-           </button>
-        </Search>
-        
-        <p></p>
-        <hr></hr>
-        <Container>
+        <hr />
+        <input type="text" placeholder="search" />
+        <button>
+          <BiSearch />
+        </button>
+      </Search>
+
+      <hr />
+      <Container>
         <Categories />
-        </Container>
-        <hr></hr>
-        </>
-    )
+      </Container>
+      <hr />
+    </>
+  );
 }
 
 const Text = styled.div`
 display: flex;
 justify-content: center;
+align-items: center;
+flex-direction: column;
 font-family: 'Montserrat', sans-serif;
+margin: 2rem;
 `
 
 const Search = styled.div`

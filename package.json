@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production nodemon server/server.js",
-    "dev:webpack": "NODE_ENV=development webpack serve --open",
-    "dev:server": "NODE_ENV=development node server/server.js",
+    "dev:webpack": "webpack-dev-server",
+    "dev:server": "NODE_ENV=development nodemon server/server.js",
     "dev": "npm run dev:webpack & npm run dev:server",
     "build": "webpack"
   },
@@ -16,18 +16,27 @@
   "license": "ISC",
   "dependencies": {
     "@babel/preset-react": "^7.22.15",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@material-ui/core": "^4.12.4",
+    "@google-cloud/storage": "^7.3.1",
+    "@mui/icons-material": "^5.14.14",
+    "@mui/material": "^5.14.14",
     "@reduxjs/toolkit": "^1.9.7",
     "aws": "^0.0.3-2",
     "aws-sdk": "^2.1472.0",
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "file": "^0.2.2",
+    "file-type": "^10.11.0",
     "loader": "^2.1.1",
+    "morgan": "^1.10.0",
+    "mui-image": "^1.0.7",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
@@ -38,7 +47,7 @@
     "react-router-dom": "^6.16.0",
     "react-use-cart": "^1.13.0",
     "sass": "^1.69.2",
-    "styled-components": "^6.0.8"
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",

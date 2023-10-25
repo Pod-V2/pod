@@ -9,41 +9,37 @@ import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart";
-
+import LandingPage from "../LandingPage/LandingPage.jsx";
+import { ProductDetails } from "../ProductDetails/ProductDetails.jsx";
 
 const Pages = () => {
 
     const Page = () => {
         return (
-            <div>
+            <PageContainer>
                 <Header />
                 <Outlet />
                 <Footer />
-            </div>
+            </PageContainer>
         )
     }
 
 
-    return (
-        <>
-        <Router>
-            <Routes>
-
-                <Route path="/" element={<Page />}>
-                    <Route path ="" element={<Home />} />
-                    <Route path ='/login' element={<Login/>}/>
-                    <Route path ='/signup' element={<SignUp/>}/>
-                    <Route path ='/listing' element={<AllListings/>}/>
-                    <Route path="/cart"  element={<Cart/>}/>
-                    <Route />
-                </Route>
-            </Routes>
-            <Routes>
-                    
-                </Routes>
-        </Router>
-        </>
-    )
+  return (
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path ="/home" element={<Home />} />
+          <Route path ='/login' element={<Login/>}/>
+          <Route path ='/signup' element={<SignUp/>}/>
+          <Route path ='/listing' element={<AllListings/>}/>
+          <Route path ='/listing/create' element={<ProductDetails/>}/>
+          <Route path="/cart"  element={<Cart/>}/>
+        </Routes>
+      </Router>
+    </>
+  )
 }
 
 
