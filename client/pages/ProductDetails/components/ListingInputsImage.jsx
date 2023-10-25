@@ -25,7 +25,7 @@ const commonStyles = {
   height: "20rem",
 };
 /**
- *
+ * Image upload component with preview
  * @param {*} props
  * @param {string} props.imageUrl - imageUrl state variable from parent component
  * @param {function} props.setImageUrl - setter for imageUrl

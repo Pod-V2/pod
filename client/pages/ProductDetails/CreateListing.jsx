@@ -13,7 +13,7 @@ import PrimarySearchAppBar from "../../common/Header.jsx";
  * @param {*} props no props needed
  * @returns
  */
-export const ProductDetails = (props) => {
+export const CreateListing = (props) => {
   const [imageUrl, setImageUrl] = useState("");
 
   return (
@@ -33,4 +33,4 @@ export const ProductDetails = (props) => {
   );
 };
 
-export default ProductDetails;
+export default CreateListing;
