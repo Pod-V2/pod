@@ -69,24 +69,6 @@ export const ListingInputsImage = (props) => {
           console.log(imageUrl);
         })
         .catch((error) => console.error(error));
-
-      // for (let i = 0; i < inputs.length; i++) {
-      //   const res = await fetch(`http://localhost:3000/image/listing${key}`);
-      //   const data = await res.json();
-      //   console.log("data", data);
-      //   fetch(data, {
-      //     // mode: "no-cors",
-      //     method: "PUT",
-      //     body: inputs[i],
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   }).catch((error) => {
-      //     console.log(inputs);
-
-      //     console.error("Error:", error);
-      //   });
-      // }
     }),
     [inputs]
   );
@@ -99,17 +81,6 @@ export const ListingInputsImage = (props) => {
     },
     [inputs]
   );
-
-  const debouncedSubmitTest = useCallback(
-    debounce_leading((e) => {
-      e.preventDefault();
-      console.log("DEBOUNCE TEST");
-    })
-  );
-  const debouncedHandler = (e) => {
-    e.preventDefault();
-    debouncedSubmitTest(e);
-  };
 
   return (
     <>
