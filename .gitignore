@@ -4,3 +4,4 @@ node_modules
 dist/*.js
 dist/
 **/gcs_key.json
+.idea
