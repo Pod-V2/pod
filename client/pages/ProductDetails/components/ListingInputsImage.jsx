@@ -103,17 +103,6 @@ export const ListingInputsImage = (props) => {
               onChange={handleChange}
             />
           </Button>
-          {/* <Button variant="outlined" size="small">
-          Choose an Image
-          <input
-            className="input"
-            type="file"
-            name="listingImage"
-            defaultValue={inputs.listingImage || ""}
-            onChange={handleChange}
-            multiple
-          />
-        </Button> */}
         </label>
         <Button
           variant="contained"
@@ -124,7 +113,6 @@ export const ListingInputsImage = (props) => {
         >
           Upload
         </Button>
-        {/* <input type="button" value="Upload" onClick={debouncedHandler} /> */}
       </Box>
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
