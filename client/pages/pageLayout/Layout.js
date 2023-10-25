@@ -34,6 +34,7 @@ const Pages = () => {
           <Route path ='/login' element={<Login/>}/>
           <Route path ='/signup' element={<SignUp/>}/>
           <Route path ='/listing' element={<AllListings/>}/>
+          
           <Route path ='/listing/create' element={<ProductDetails/>}/>
           <Route path="/cart"  element={<Cart/>}/>
         </Routes>

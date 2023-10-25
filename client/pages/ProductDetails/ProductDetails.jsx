@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { ListingForm } from "./components/ListingForm.jsx";
+import PrimarySearchAppBar from "../../common/Header.jsx";
 
 /**
  * Product creation details page
@@ -16,14 +17,19 @@ export const ProductDetails = (props) => {
   const [imageUrl, setImageUrl] = useState("");
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="center">
-      <Card sx={{ maxWidth: 600 }}>
-      <h1>Create a new listing:</h1>
-        <CardContent>
-          <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl}/>
-        </CardContent>
-      </Card>
-    </Box>
+    <>
+      <PrimarySearchAppBar />
+      <Box sx={{m: 1}} flexDirection="column" display="flex" alignItems="center" justifyContent="center">
+        <Box sx={{m:1}}>
+          <h1>Create A New Listing</h1>
+        </Box>
+        <Card sx={{ maxWidth: 600 }}>
+          <CardContent>
+            <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl} />
+          </CardContent>
+        </Card>
+      </Box>
+    </>
   );
 };
 

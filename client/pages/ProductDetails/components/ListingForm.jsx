@@ -7,6 +7,9 @@ import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { debounce_leading } from "../debounce.js";
+import SendIcon from "@mui/icons-material/Send";
+import { Send } from "@mui/icons-material";
+
 
 /**
  * Product creation details page
@@ -133,7 +136,7 @@ export const ListingForm = ({ imageUrl, setImageUrl }) => {
           name="description"
         />
         <ListingInputsImage imageUrl={imageUrl} setImageUrl={setImageUrl} />
-        <Button variant="outlined" type="submit">
+        <Button variant="contained" type="submit" endIcon={<SendIcon />}>
           Submit
         </Button>
         {/* <input className="listingsInputs" type="submit" value="Submit" /> */}
