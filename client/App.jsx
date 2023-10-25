@@ -5,13 +5,17 @@ import Pages from "./pages/pageLayout/Layout";
 import { AllListings } from "./pages/AllListings/AllListings.jsx";
 import Login from "./pages/SignInUp/Login";
 import SignUp from "./pages/SignInUp/SignUp";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-const App  = () => {
+const App = () => {
+  const queryClient = new QueryClient();
   return (
     <div>
-      <Pages/>
+      <QueryClientProvider client={queryClient}>
+        <Pages />
+      </QueryClientProvider>
     </div>
-  )
-}
+  );
+};
 
 export default App;
