@@ -76,7 +76,6 @@ export const ListingInputsImage = (props) => {
   const debouncedSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(e.target);
       handleSubmit(e);
     },
     [inputs]
