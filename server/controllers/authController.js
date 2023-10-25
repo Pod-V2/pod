@@ -5,22 +5,15 @@ const SALT_WORK_FACTOR = 12;
 const authController = {};
 
 authController.createUser = async (req, res, next) => {
-  const {
-    address,
-    city,
-    email,
-    first_name,
-    last_name,
-    phone,
-    pw,
-    state,
-    username,
-    zip,
-  } = req.body;
+  
+  const { name, email, password } = req.body
+  console.log(req.body)
+  
+  if(!name || !email || !password) return next({ message: { err: 'Missing information to create account' } });
 
   // what are the required fields here? // what do we need to error test for
 
-  const client = await pool.connect()
+  const client = await pool.connect().then(console.log('Connected to DB'))
     .catch(err => next({
       log: `authController - pool connection failed; ERROR: ${err}`,
       message: {
@@ -28,8 +21,9 @@ authController.createUser = async (req, res, next) => {
       },
     }));
   try {
-    const createUserQuery = `INSERT INTO users(address, city, email, first_name, last_name, phone, pw, state, username, zip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
-    bcrypt.hash(pw, SALT_WORK_FACTOR, (err, hash) => {
+    const createUserQuery = `INSERT INTO users(name, email, password) VALUES($1, $2, $3);`;
+    bcrypt.hash(password, SALT_WORK_FACTOR, (err, hash) => {
+      const newPass = hash;
       if (err) return next({
         log: `authController - bcrypt error ERROR: ${err}`,
         message: {
@@ -37,16 +31,9 @@ authController.createUser = async (req, res, next) => {
         }
       });
       client.query(createUserQuery, [
-        address,
-        city,
+        name,
         email,
-        first_name,
-        last_name,
-        phone,
-        hash,
-        state,
-        username,
-        zip,
+        newPass
       ]);
     });
   } catch (err) {
@@ -63,6 +50,10 @@ authController.createUser = async (req, res, next) => {
 };
 
 authController.verifyUser = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if(!email || !password) return next({ message: { err: 'Incorrect email or password' } });
+
   const client = await pool.connect()
     .catch((err) => next({
       log: `authController - pool connection failed; ERROR: ${err}`,
@@ -71,19 +62,20 @@ authController.verifyUser = async (req, res, next) => {
       },
     }));
   try {
-    const { username, pw } = req.body;
-    if (!username || !pw) return res.redirect('/login/?Error=missing_info');
-    const userQuery = `SELECT username, pw FROM users WHERE username = $1`;
-    const response = await client.query(userQuery, [ username ]);
-    const pwMatch = await bcrypt.compare(pw, response.rows[0].pw);
-    if (!pwMatch) res.status(401).send('Login failed, incorrect username or password');
+    const { email, password } = req.body;
+    if (!email || !password) return res.redirect('/login/?Error=missing_info');
+    const userQuery = `SELECT email, password FROM users WHERE email = $1`;
+    const response = await client.query(userQuery, [ email ]);
+    console.log(response)
+    const passwordMatch = await bcrypt.compare(password, response.rows[0].password);
+    if (!passwordMatch) res.status(401).send('Login failed, incorrect email or password');
     else {
       client.release();
       return next();
     }
   } catch (e) {
     return next({
-      log: `authController.createUser - querying listings from db ERROR: ${err}`,
+      log: `authController.verifyUser - querying listings from db ERROR: ${e}`,
       message: {
         err: "Error in authController.createUser. Check server logs",
       },
