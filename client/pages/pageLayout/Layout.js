@@ -44,7 +44,8 @@ const Pages = () => {
 
 
 const PageContainer = styled.div`
-background-color: #F0F0F0;
+background-color: #F0F0F0,
+min-height: 100%
 `
 
 export default Pages;
