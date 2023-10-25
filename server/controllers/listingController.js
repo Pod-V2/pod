@@ -82,19 +82,6 @@ listingController.getListing = async (req, res, next) => {
     }
 };
 
-/**
- * Create a new listing
- * @param {*} req 
- * @param {string} req.body.userid
- * @param {string} req.body.product_title
- * @param {string} req.body.price
- * @param {string} req.body.description
- * @param {string} req.body.category
- * @param {string} req.body.img_url
- * @param {*} res 
- * @param {*} next 
- * @returns 
- */
 listingController.createListing = async (req, res, next) => {
     const client = await pool.connect()
         .catch(err => next({
@@ -105,17 +92,17 @@ listingController.createListing = async (req, res, next) => {
         }));
     try {
         const createListingQuery = `INSERT INTO listings
-                (product_title, price, category, userid, description, img_url)
+                (product_name, price, quantity, category, seller_id, img_url)
             VALUES ($1, $2, $3, $4, $5, $6)`;
-        // console.log('request body: ', req.body);
+        console.log('request body: ', req.body);
 
         await client.query(createListingQuery, [
-            req.body.product_title,
+            req.body.name,
             req.body.price,
+            req.body.qty,
             req.body.category,
-            req.body.userid,
-            req.body.description,
-            req.body.img_url
+            req.body.sellerId,
+            req.body.listingUrl
         ]);
     } catch (err) {
         return next({

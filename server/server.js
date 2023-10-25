@@ -1,16 +1,12 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const morgan = require('morgan');
-
 
 const PORT = 3000;
 const app = express();
 
-
-app.use(express.json());
-app.use(morgan('tiny'));
 app.use(cors());
+app.use(express.json());
 
 const authRouter = require("./routes/authRouter");
 const listingRouter = require('./routes/listingRouter');
