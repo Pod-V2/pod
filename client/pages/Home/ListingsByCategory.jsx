@@ -11,8 +11,8 @@ import styled from "styled-components";
  */
 
 const ListingsByCategory = (props) =>{
-
-
+  console.log(props.categoryName);
+  const [listings, setListings] = useState([]);
 
     return (
         <>

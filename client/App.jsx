@@ -6,6 +6,11 @@ import { AllListings } from "./pages/AllListings/AllListings.jsx";
 import Login from "./pages/SignInUp/Login";
 import SignUp from "./pages/SignInUp/SignUp";
 import styled from "styled-components";
+import { useState } from 'react';
+
+const [categories, setCategories] = useState([]);
+
+
 
 const App  = () => {
   return (
