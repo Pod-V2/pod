@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import Typography from '@mui/material/Typography';
 import { CardActions, CardMedia } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 /**
  * Product creation details page
@@ -20,48 +20,52 @@ import {useParams} from 'react-router-dom';
  */
 export const UpdateListing = (props) => {
   const [imageUrl, setImageUrl] = useState('');
-  const {id} = useParams();
+  const { id } = useParams();
   const { isPending, error, data } = useQuery({
     queryKey: ['repoData'],
-    queryFn: () =>
-      fetch(`http://localhost:3000/api/listing/${id}`).then(
-        (res) => res.json(),
-      ).then((res) => {
-        console.log(res);
-        return res
-      })
-  })
+    refetchOnWindowFocus: false,
+    queryFn: () => fetch(`http://localhost:3000/api/listing/${id}`).then((res) => res.json(),).then((res) => {
+      console.log(res);
+      return res;
+    })
+  });
 
   if (isPending) {
-    return (
-      <>
-        <PrimarySearchAppBar/>
-        <div>'Loading...'</div>
-      </>
-)}
+    return (<>
+      <PrimarySearchAppBar/>
+      <div>'Loading...'</div>
+    </>);
+  }
   if (error) return 'An error has occurred in fetching listings: ' + error.message;
 
   return (<>
-      <PrimarySearchAppBar/>
-      <Box
-        sx={{ m: 1 }}
-        flexDirection="column"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Box sx={{ m: 1 }}>
-          <h1>Listing Update</h1>
-        </Box>
-        <Card sx={{ display: "flex", maxHeight: 600 }}>
-          <CardMedia
-            component="img"
-            image={data.img_url}
-            alt="green iguana"
-          />
-          <CardContent sx={{display: "flex", flexDirection: "column"}}>
+    <PrimarySearchAppBar/>
+    <Box
+      sx={{ m: 1 }}
+      flexDirection="column"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Box sx={{ m: 1 }}>
+        <h1>Listing Update</h1>
+      </Box>
+      <Card sx={{ display: 'flex' }}>
+        <CardMedia
+          component="img"
+          image={data.img_url}
+          alt="green iguana"
+          sx={{maxHeight: 600}}
+        />
+        <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
             <Typography gutterBottom variant="h5" component="div">
-              ${data.price} {data.listing}
+              {data.price.toLocaleString('en-US', {
+                style: 'currency', currency: 'USD',
+              })}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+              {data.listing}
             </Typography>
             <Typography variant="body2" color="text.secondary" component="div">
               {data.category}
@@ -71,21 +75,19 @@ export const UpdateListing = (props) => {
             </Typography>
             <Typography variant="body2" color="text.primary" component="div">
               {data.description}
-            </Typography>
-            <CardActions>
-              <Button size="small" color="primary">
-                Share
-              </Button>
-              <Button size="small" color="primary">
-                Edit
-              </Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-
-      </Box>
-    </>);
+            </Typography></div>
+          <CardActions>
+            <Button size="small" color="primary">
+              Delete
+            </Button>
+            <Button size="small" color="primary">
+              Edit
+            </Button>
+          </CardActions>
+        </CardContent>
+      </Card>
+    </Box>
+  </>);
 };
 
 export default UpdateListing;
