@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { CardActions, CardMedia } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
 import { useParams } from 'react-router-dom';
+import { ListingText } from './components/ListingText';
 
 /**
  * Product creation details page
@@ -55,27 +56,10 @@ export const UpdateListing = (props) => {
           component="img"
           image={data.img_url}
           alt="green iguana"
-          sx={{maxHeight: 600}}
+          sx={{ maxHeight: 600 }}
         />
         <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <Typography gutterBottom variant="h5" component="div">
-              {data.price.toLocaleString('en-US', {
-                style: 'currency', currency: 'USD',
-              })}
-            </Typography>
-            <Typography gutterBottom variant="h5" component="div">
-              {data.listing}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" component="div">
-              {data.category}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" component="div">
-              Sold by {data.seller}
-            </Typography>
-            <Typography variant="body2" color="text.primary" component="div">
-              {data.description}
-            </Typography></div>
+          <ListingText data={data}></ListingText>
           <CardActions>
             <Button size="small" color="primary">
               Delete
