@@ -18,6 +18,9 @@ module.exports = {
                 exclude: /node.modules/,
                 use: {
                     loader: 'babel-loader'
+                },
+                resolve: {
+                    extensions: ["", ".js", ".jsx"]
                 }
             },
             {
