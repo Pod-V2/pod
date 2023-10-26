@@ -2,7 +2,7 @@ import Item from './components/Item'
 
 const Sell = () => {
 
-  // const url = ''
+  const url = '/api/cart';
   const [item, setItem] = useState(null)
 
   useEffect(() =>{
@@ -17,7 +17,7 @@ const Sell = () => {
       console.log("get request in item.jsx, has fetch issues")
     }
     fetchItem()
-  }, [url])
+  }, [url]);
 
   return(
   <div className="sell">

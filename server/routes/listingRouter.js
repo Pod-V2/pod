@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const listingController = require("../controllers/listingController");
+const cartController = require("../controllers/cartController");
 
 router.get("/", listingController.getAllListings, (req, res) => {
   console.log(res.locals.listings);

@@ -20,3 +20,26 @@ html {
     display: block;
 }
 
+.MuiPaper-root {
+  // margin-top: 10px;
+  padding: 10px;
+}
+
+.MuiCardMedia-media {
+  height: 200px;
+  object-fit: contain !important;
+}
+
+.MuiButtonBase-root, .MuiCardActionArea-root, .css-1oitmrd-MuiButtonBase-root-MuiCardActionArea-root {
+  display: flex !important;
+  justify-content: space-around !important;
+}
+
+.MuiCardMedia-root, .MuiCardMedia-media, .MuiCardMedia-img, .MuiCardContent-root {
+  width: 50% !important;
+  padding: 10px
+}
+
+.MuiCardActions-root {
+  justify-content: flex-end !important;
+}

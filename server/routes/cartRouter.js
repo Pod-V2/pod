@@ -14,6 +14,10 @@ router.patch('/', cartController.updateUserCart,
     (req, res) => res.status(200).send('Updated cart')
 );
 
+// router.patch('/listing', cartController.updateListingOfUserCart,
+//     (req, res) => res.status(200).send('Updated listing of user cart')
+// );
+
 router.delete('/', cartController.removeCartItem,
     (req, res) => res.status(200).send('Removed from cart')
 );

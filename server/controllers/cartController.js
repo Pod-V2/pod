@@ -2,6 +2,22 @@ const pool = require('../db/models');
 
 const cartController = {};
 
+cartController.getAllUserCart = async (req, res, next) => {
+    const userCartQuery = `SELECT l.product_title, l.price, c."numberOfItems" AS qty
+    FROM carts c
+    JOIN users u
+        ON c.userid = u.userid
+    JOIN listings l
+        ON l.listingid = 2
+    WHERE u.userid = $1;`
+
+    
+    
+    const response = await client.query(userCartQuery, [ id ]);
+    // const response = await client.query(userCartQuery);
+    res.locals.userCart = response.rows;
+}
+
 cartController.getUserCart = async (req, res, next) => {
     const client = await pool.connect()
         .catch(err => next({
@@ -12,6 +28,7 @@ cartController.getUserCart = async (req, res, next) => {
         }));
     try {
         const { id } = req.query;
+        console.log('~ ~ ~ id: ', id);
         if (!id) return next({
             log: `cartController.getUserCart - never received an ID in query`,
             message: {
@@ -19,16 +36,21 @@ cartController.getUserCart = async (req, res, next) => {
             }
         });
         console.log(`passed in query param: ${id}`);
-        const userCartQuery = `SELECT l.product_name, l.price, c.quantity AS qty
+        // const userCartQuery = `SELECT l.product_title, l.price, c.numberOfItems AS qty
+        // FROM carts c
+        // JOIN users u
+        //     ON c.userid = u.userid
+        // JOIN listings l
+        //     ON c.listingid = l.listingid
+        // WHERE u.userid = $1;`
+        const userCartQuery = `SELECT c.listingid
         FROM carts c
-        JOIN users u
-            ON c.user_id = u._id
-        JOIN listings l
-            ON c.listing_id = l._id
-        WHERE u._id = $1;`
-
+        WHERE c.userid = $1;`
+        
         const response = await client.query(userCartQuery, [ id ]);
-        res.locals.userCart = response.rows;
+        // const response = await client.query(userCartQuery);
+        res.locals.userCart = response.rows[0];
+        console.log('> > > userCart: ', res.locals.userCart);
     } catch (err) {
         return next({
             log: `cartController.getUserCart - querying user cart from db ERROR: ${err}`,
@@ -130,7 +152,54 @@ cartController.updateUserCart = async (req, res, next) => {
     }
 }
 
+cartController.updateListingOfUserCart = async (req, res, next) => {
+    const client = await pool.connect()
+        .catch(err => next({
+            log: `cartController - pool connection failed ERROR: ${err}`,
+            message: {
+                err: 'Error in cartController.updateListingOfUserCart. Check server logs'
+            }
+        }));
+    try {
+        console.log('req.query from cartController.updateListingOfUserCart: ', req.query);
+        console.log('req.body from cartController.updateListingOfUserCart: ', req.body);
+        const { userId } = req.query;
+        const listingIds = req.body;
+        if (!userId || !listingIds) return next({
+            log: `cartController.updateListingOfUserCart - never received user and/or listing ID(s) and/or qty in query ERROR`,
+            message: {
+                err: 'Error in cartController.updateListingOfUserCart. Check server logs'
+            }
+        });
+        // console.log(`user id: ${userId}`);
+        // console.log(`listing id: ${listingIds}, NEW qty: ${qty}`);
+        // if quantity in cart for listing is now 0, delete
+        // if (parseInt(qty) === 0) {
+        //     console.log('delete this item from cart');
+        //     return cartController.removeCartItem(req, res, next);
+        // }
+        console.log('listingIds from cartController: ', listingIds);
+        console.log('userId from cartController: ', userId);
+        const updateCartQuery = `UPDATE carts
+        SET listingid = $1
+        WHERE userid = $2;`;
+
+        await client.query(updateCartQuery, [ listingIds, userId ]);
+    } catch (err) {
+        return next({
+            log: `cartController.updateUserCart - altering user cart in db ERROR: ${err}`,
+            message: {
+                err: 'Error in cartController.updateUserCart. Check server logs'
+            }
+        });
+    } finally {
+        client.release();
+        return next();
+    }
+}
+
 cartController.removeCartItem = async (req, res, next) => {
+    console.log('. . . removing');
     const client = await pool.connect()
         .catch(err => next({
             log: `cartController - pool connection failed ERROR: ${err}`,
@@ -140,6 +209,7 @@ cartController.removeCartItem = async (req, res, next) => {
         }));
     try {
         const { userId, listingId } = req.query;
+        console.log('<> userId, listingId: ', userId, listingId);
         if (!userId || !listingId) return next({
             log: `cartController.removeCartItem - never received user and/or listing ID(s) in query ERROR`,
             message: {
@@ -149,9 +219,13 @@ cartController.removeCartItem = async (req, res, next) => {
         console.log(`user id: ${userId}`);
         console.log(`listing to remove: ${listingId}`);
 
+        // const removeItemQuery = `DELETE FROM carts
+        // WHERE userid = $1 AND listingid = $2;`;
+        // await client.query(removeItemQuery, [ userId, listingId ]);
+
         const removeItemQuery = `DELETE FROM carts
-        WHERE user_id = $1 AND listing_id = $2;`;
-        await client.query(removeItemQuery, [ userId, listingId ]);
+        WHERE userid = $1;`;
+        await client.query(removeItemQuery, [ userId ]);
     } catch (err) {
         return next({
             log: `cartController.removeFromCart - deleting from user cart in db ERROR: ${err}`,

@@ -11,16 +11,28 @@ listingController.getAllListings = async (req, res, next) => {
             }
         }));
     try {
-        const listingsQuery = `SELECT l.product_title,
+        // const listingsQuery = `SELECT l.product_title AS listing,
+        //     l.price,
+        //     l.category,
+        //     u.name AS seller,
+        //     l.img_url
+        // FROM listings l
+        // JOIN users u
+        //   ON l.userid = u.userid;`;
+
+        const {id} = req.params;
+
+        const listingsQuery = `SELECT l.product_title AS listing,
             l.price,
             l.category,
             u.name AS seller,
             l.img_url
         FROM listings l
         JOIN users u
-          ON l.userid = u.userid;`;
+        ON l.userid = u.userid
+        WHERE u.userid = $1;`;
 
-        const response = await client.query(listingsQuery);
+        const response = await client.query(listingsQuery, [id]);
         res.locals.listings = response.rows;
 
     } catch (err) {
@@ -38,6 +50,7 @@ listingController.getAllListings = async (req, res, next) => {
 };
 
 listingController.getListing = async (req, res, next) => {
+    console.log('...getting listings');
     const client = await pool.connect()
         .catch(err => next({
             log: `listingController - pool connection failed ERROR : ${err}`,
@@ -53,24 +66,64 @@ listingController.getListing = async (req, res, next) => {
                 err: 'Error in listingController.getListing. Check server logs'
             }
         });
-        console.log(`passed in query param: ${id}`);
-        const getListingQuery = `SELECT l.product_title AS listing,
-            l.price,
-            l.category,
-            u.name AS seller,
-            l.img_url,
-            l.description,
-            l.listingid
-        FROM listings l
-        JOIN users u
-            ON l.userid = u.userid
-        WHERE l.listingid = $1;`;
+        console.log(`passed in query parammm: ${id}`);
+        // const getListingQuery = `SELECT l.product_title AS listing,
+        //     l.price,
+        //     l.category,
+        //     u.name AS seller,
+        //     l.img_url
+        // FROM listings l
+        // JOIN users u
+        // ON l.userid = u.userid
+        // WHERE l.listingid = $1;`;
+        console.log('< < < req.body: ', req.body);
+        // const {ids} = req.body.listingIds;
+        // const ids = req.body.listingIds.ids;
+        console.log('req.query: ', req.query);
+        const ids = JSON.parse(req.query.data);
+        console.log('. . . ids: ', Array.isArray(ids));
+        ids.forEach(el => Number(el));
+        console.log('+++ids before sorting: ', ids);
+        ids.sort((a, b) => a - b);
+        console.log('+++ids after sorting: ', ids);
+        // for(const id of ids) {
+        //     console.log(typeof id);
+        // }
+        // const getListingQuery = `SELECT l.product_title AS listing,
+        //     l.price,
+        //     l.category,
+        //     u.name AS seller,
+        //     l.img_url
+        // FROM listings l
+        // JOIN users u
+        // ON l.userid = u.userid
+        // WHERE l.listingid IN ($1);`;
+        // const response = await client.query(getListingQuery, [ ...ids ]);
 
-        const response = await client.query(getListingQuery, [ id ]);
-        res.locals.listing = response.rows[0];
+        if(ids.length) {
+            const getListingQuery = `SELECT l.product_title AS listing,
+                l.price,
+                l.category,
+                u.name AS seller,
+                l.description,
+                l.img_url
+            FROM listings l
+            JOIN users u
+            ON l.userid = u.userid
+            WHERE l.listingid IN (${ids.join(',')});`;
+            // const response = await client.query(getListingQuery, [ ids ]);
+            const response = await client.query(getListingQuery);
+            // console.log('. query response: ', response);
+            res.locals.listing = response.rows;
+            console.log(',,,res.locals.listing: ', res.locals.listing);
+        }
+        else {
+            res.locals.listing = [];
+        }
+        console.log('res.locals.listing: ', res.locals.listing);
     } catch (err) {
         return next({
-            log: `listingController.getListing - querying listing from db ERROR: ${err}`,
+            log: `listingController.getListing - querying listing from db ERROR: ${err.message}`,
             message: {
                 err: 'Error in listingController.getListing. Check server logs'
             }

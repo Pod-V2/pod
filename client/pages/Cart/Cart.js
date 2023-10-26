@@ -1,51 +1,128 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BiCart } from "react-icons/bi"; 
 // import { useSelector } from "react-redux";
+import Item from "../Sell/components/Item";
+import ItemCard from "./components/ItemCard";
 
+// const Item = ({item}) => {
+//     const handleRemoveBtnClick = () => {
 
-const Item = ({item}) => {
-
-    return (
-        <Container>
-            <p className="text"> <strong>Item:</strong>{item}
-            <br></br>
-            <strong>Quantity:</strong>1</p>
-            <div className="Buttons">
-            <button>+</button>
-            <button>-</button>
-            </div>
-           
-          
+//     }
+//     return (
+//         <Container>
+//             <div>
+//                 <p className="text"> <strong>Item:</strong>{item}
+//                 </p>
+//                 <p>Price: $10</p>
+//             </div>
             
-        </Container>
-    );
-};
+//             <div className="removeItemDiv">
+//                 <button onClick={handleRemoveBtnClick}>Remove</button>
+//             </div>
+//         </Container>
+//     );
+// };
 
 
 const Cart = () => {
+    const [output, setOutput] = useState([]);
+    console.log('loading with output: ', output);
+    const handleRemoveBtnClick = async (id) => {
+        // console.log(`Invoking handleRemoveBtnClick with listingId: ${id}`);
+        // alert(`Invoking handleRemoveBtnClick with listingId: ${id}`);
+        try {
+            // Retrieve all current listingids
+            fetch('/api/cart/?id=14')
+            .then(data => data.json())
+            .then(async (data) => {
+                const currentListingIds = data.listingid;
+                const updatedOutput = output.filter(item => item !== output[id]);
+                console.log('currentListingIds: ', currentListingIds);
+                const updatedLisingIds = currentListingIds.filter(currentId => currentId !== currentListingIds[id]);
+                console.log('updatedOutput: ', updatedOutput);
+                console.log('updatedLisingIds: ', updatedLisingIds);
+                fetch(`/api/listing/?userId=14`, {
+                    method: 'PATCH',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(updatedLisingIds)
+                })
+                .then(data => data)
+                .then(data => {
+                    fetch(`/api/cart/?id=14`)
+                    .then(data => data.json())
+                    .then(async (data) => {
+                        const listingIds = data.listingid;
+                        listingIds.sort((a, b) => a - b);
+                        const jsonIds = JSON.stringify(listingIds);
+                        const rawItems = await fetch(`/api/listing/14?data=${jsonIds}`);
+                        console.log('rawItems: ', rawItems);
+                        const jsonData = await rawItems.json();
+                        console.log('jsonData: ', jsonData);
+                        setOutput(jsonData);
+                    })
+                    .catch(err => {
+                        console.log('Something went wrong from getting /api/cart: ', err.message);
+                    });
+                })
+                .catch(err => {
+                    console.log('err on PATCH listingIds: ', err.message);
+                });
+            })
+            .catch(err => {
+                console.log('err: ', err);
+            });
+        }
+        catch(err) {
+            console.log('Something wrong from handleRemoveBtnClick!');
+        }
+    }
 
-    // const products = useSelector((state) => state.cart.checkout)
-    // const total = useSelector((state) => state.cart.total);
-    // console.log(products);
-   
-    let output;
-    output = ["test", "test1", "test2", "test3"];
+    useEffect(() => {
+        fetch('/api/cart/?id=14')
+        .then(data => data.json())
+        .then(async (data) => {
+            console.log('All listing ids in user cart: ', data);
+            const listingIds = data.listingid;
+            listingIds.sort((a, b) => a - b);
+            const jsonIds = JSON.stringify(listingIds);
+            const rawItems = await fetch(`/api/listing/14?data=${jsonIds}`);
+            console.log('rawItems: ', rawItems);
+            const jsonData = await rawItems.json();
+            console.log('jsonData: ', jsonData);
+            setOutput(jsonData);
+        })
+        .catch(err => {
+            console.log('Something went wrong from getting /api/cart', err.message);
+        });
+    }, []);
+    
     const display = (output) => {
-        
+        console.log('.. .. .. output: ', output);
         // if(Array.isArray(output)) {
             return (
                 <div>
-                    {output.map((item, i)=> (
+                    {/* {output.map((item, i)=> (
                         <Display>
                      <Item key={i} item={item} />
                         </Display>
-                    ))}
+                    ))} */}
+                    {output.map((item, i) => <Item key={i} item={item} />)}
                 </div>
             )
         // }
 
         // return output;
+    }
+
+    const getTotal = () => {
+        let sum = 0;
+        for (const item of output) {
+            sum += parseFloat(item.price);
+        }
+        return sum;
     }
 
     return(
@@ -56,18 +133,27 @@ const Cart = () => {
             <h2>My Cart <a>{<BiCart/>}</a></h2>
            
             <hr></hr>
-            {display(output)}
+            {/* {display(output)} */}
+            {/* {output.length ? output.map((item, i) => {
+                console.log('item: ', item);
+                return <Item key={i} item={item} handleRemoveBtnClickParent = {handleRemoveBtnClick} id={i}/>
+            }) : 'No items to show'} */}
+            {output.length ? output.map((item, i) =>
+                <ItemCard key={i} name={item.listing}
+                price={item.price}
+                img_url={item.img_url}
+                description={item.description} handleRemoveBtnClickParent = {handleRemoveBtnClick} id={i}/>) : 'No items to show'}
             </div>
 
             <Checkout>
                 <h2>Checkout</h2>
 
-                <strong>Shipping cost :</strong>
+                <strong>Shipping cost: </strong>
                 <p></p>
-                <strong>Discount : </strong>
+                <strong>Discount: </strong>
                 <p></p>
                 <hr></hr>
-                <span><strong>Total : </strong></span>  
+                <span><strong>Total: ${getTotal()}</strong></span>  
                 <p></p>
                 
                 <button>checkout</button>
