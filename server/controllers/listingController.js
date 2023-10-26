@@ -11,7 +11,7 @@ listingController.getAllListings = async (req, res, next) => {
             }
         }));
     try {
-        const listingsQuery = `SELECT l.product_title AS listing,
+        const listingsQuery = `SELECT l.product_title,
             l.price,
             l.category,
             u.name AS seller,
@@ -54,18 +54,16 @@ listingController.getListing = async (req, res, next) => {
             }
         });
         console.log(`passed in query param: ${id}`);
-        const getListingQuery = `SELECT l.product_name AS listing,
+        const getListingQuery = `SELECT l.product_title AS listing,
             l.price,
-            l.quantity,
             l.category,
-            u.username AS seller,
-            u.city,
-            u.state,
+            u.name AS seller,
             l.img_url,
+            l.description
         FROM listings l
         JOIN users u
-            ON l.seller_id = u._id
-        WHERE l._id = $1;`;
+            ON l.userid = u.userid
+        WHERE l.listingid = $1;`;
 
         const response = await client.query(getListingQuery, [ id ]);
         res.locals.listing = response.rows[0];
@@ -84,16 +82,16 @@ listingController.getListing = async (req, res, next) => {
 
 /**
  * Create a new listing
- * @param {*} req 
+ * @param {*} req
  * @param {string} req.body.userid
  * @param {string} req.body.product_title
  * @param {string} req.body.price
  * @param {string} req.body.description
  * @param {string} req.body.category
  * @param {string} req.body.img_url
- * @param {*} res 
- * @param {*} next 
- * @returns 
+ * @param {*} res
+ * @param {*} next
+ * @returns
  */
 listingController.createListing = async (req, res, next) => {
     const client = await pool.connect()

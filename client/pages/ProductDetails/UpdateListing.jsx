@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
-import ListingInputsImage from "./components/ListingInputsImage.jsx";
-import { CardContent, FormControl, FormLabel } from "@mui/material";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import { ListingForm } from "./components/ListingForm.jsx";
-import PrimarySearchAppBar from "../../common/Header.jsx";
+import React, { useEffect, useState } from 'react';
+import ListingInputsImage from './components/ListingInputsImage.jsx';
+import { CardContent, FormControl, FormLabel } from '@mui/material';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import { ListingForm } from './components/ListingForm.jsx';
+import PrimarySearchAppBar from '../../common/Header.jsx';
+import { useQuery } from '@tanstack/react-query';
+import Typography from '@mui/material/Typography';
+import { CardActions, CardMedia } from '@material-ui/core';
+import Grid from '@mui/material/Grid';
+import {useParams} from 'react-router-dom';
 
 /**
  * Product creation details page
@@ -14,23 +19,73 @@ import PrimarySearchAppBar from "../../common/Header.jsx";
  * @returns
  */
 export const UpdateListing = (props) => {
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
+  const {id} = useParams();
+  const { isPending, error, data } = useQuery({
+    queryKey: ['repoData'],
+    queryFn: () =>
+      fetch(`http://localhost:3000/api/listing/${id}`).then(
+        (res) => res.json(),
+      ).then((res) => {
+        console.log(res);
+        return res
+      })
+  })
 
-  return (
-    <>
-      <PrimarySearchAppBar />
-      <Box sx={{m: 1}} flexDirection="column" display="flex" alignItems="center" justifyContent="center">
-        <Box sx={{m:1}}>
-          <h1>Create A New Listing</h1>
+  if (isPending) {
+    return (
+      <>
+        <PrimarySearchAppBar/>
+        <div>'Loading...'</div>
+      </>
+)}
+  if (error) return 'An error has occurred in fetching listings: ' + error.message;
+
+  return (<>
+      <PrimarySearchAppBar/>
+      <Box
+        sx={{ m: 1 }}
+        flexDirection="column"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Box sx={{ m: 1 }}>
+          <h1>Listing Update</h1>
         </Box>
-        <Card sx={{ maxWidth: 600 }}>
-          <CardContent>
-            <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl} />
+        <Card sx={{ display: "flex", maxHeight: 600 }}>
+          <CardMedia
+            component="img"
+            image={data.img_url}
+            alt="green iguana"
+          />
+          <CardContent sx={{display: "flex", flexDirection: "column"}}>
+            <Typography gutterBottom variant="h5" component="div">
+              ${data.price} {data.listing}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" component="div">
+              {data.category}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" component="div">
+              Sold by {data.seller}
+            </Typography>
+            <Typography variant="body2" color="text.primary" component="div">
+              {data.description}
+            </Typography>
+            <CardActions>
+              <Button size="small" color="primary">
+                Share
+              </Button>
+              <Button size="small" color="primary">
+                Edit
+              </Button>
+            </CardActions>
           </CardContent>
         </Card>
+
+
       </Box>
-    </>
-  );
+    </>);
 };
 
 export default UpdateListing;

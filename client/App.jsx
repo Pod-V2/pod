@@ -5,7 +5,7 @@ import Pages from "./pages/pageLayout/Layout";
 import { AllListings } from "./pages/AllListings/AllListings.jsx";
 import Login from "./pages/SignInUp/Login";
 import SignUp from "./pages/SignInUp/SignUp";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import styled from "styled-components";
 
 const App = () => {
