@@ -10,6 +10,7 @@ import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart";
 import LandingPage from "../LandingPage/LandingPage.jsx";
+import Profile from '../Profile/Profile.jsx';
 import { ProductDetails } from "../ProductDetails/ProductDetails.jsx";
 
 const Pages = () => {
@@ -36,6 +37,7 @@ const Pages = () => {
           <Route path ='/listing' element={<AllListings/>}/>
           <Route path ='/listing/create' element={<ProductDetails/>}/>
           <Route path="/cart"  element={<Cart/>}/>
+          <Route path='/profile' element={<Profile/>}/>
         </Routes>
       </Router>
     </>
