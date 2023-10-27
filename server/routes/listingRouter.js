@@ -8,7 +8,11 @@ router.get("/", listingController.getAllListings, (req, res) => {
   // return res.status(200).json([{name: 'test'}, {name: 'test2'}]);
 });
 
-router.get("/:id", listingController.getListing, (req, res) => {
+router.get("/id/:id", listingController.getListing, (req, res) => {
+  return res.status(200).json(res.locals.listing);
+});
+
+router.get("/category/:category", listingController.getListingsByCategory, (req, res) => {
   return res.status(200).json(res.locals.listing);
 });
 
@@ -18,11 +22,11 @@ router.post("/", listingController.createListing, (req, res) => {
     .json({ status: "success", message: "Successfully created new listing!" });
 });
 
-router.patch("/:id", listingController.updateListing, (req, res) => {
+router.patch("/id/:id", listingController.updateListing, (req, res) => {
   return res.status(200).json(res.locals.updatedListing);
 });
 
-router.delete("/:id", listingController.deleteListing, (req, res) => {
+router.delete("/id/:id", listingController.deleteListing, (req, res) => {
   return res.status(200).json(res.locals.deletedListing);
 });
 

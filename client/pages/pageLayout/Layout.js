@@ -12,6 +12,8 @@ import Cart from "../Cart/Cart";
 import LandingPage from "../LandingPage/LandingPage.jsx";
 import Profile from '../Profile/Profile.jsx';
 import { ProductDetails } from "../ProductDetails/ProductDetails.jsx";
+import ListingsByCategory from "../Home/ListingsByCategory.jsx";
+
 
 const Pages = () => {
 
@@ -34,10 +36,12 @@ const Pages = () => {
           <Route path ="/home" element={<Home />} />
           <Route path ='/login' element={<Login/>}/>
           <Route path ='/signup' element={<SignUp/>}/>
-          <Route path ='/listing' element={<AllListings/>}/>
+          <Route path ='/listing/' element={<AllListings/>}/>
+          <Route path ='/listing/:id' element={<AllListings/>}/>
           <Route path ='/listing/create' element={<ProductDetails/>}/>
           <Route path="/cart"  element={<Cart/>}/>
           <Route path='/profile' element={<Profile/>}/>
+          <Route path="/ListingsByCategory/:category" element={<ListingsByCategory/>}/>
         </Routes>
       </Router>
     </>
