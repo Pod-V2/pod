@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Category from "./category";
-
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Categories = () => {
@@ -14,6 +14,11 @@ const Categories = () => {
    * to components
   */
 const [category, setCategory] = useState([]);
+const navigate = useNavigate();
+//handleClick to be put in the button below to redirect to the specific page. This is working correctly.
+function handleClickCategory(i){
+  navigate(`/ListingsByCategory/${category[i]}`);
+}
 
 useEffect(()=> {
   fetch('/api/categories')
@@ -32,9 +37,16 @@ return (
     <Container>
         
     {
-      category.map((element) => {
-        //Add a handleClick function that will redirect to the appropriate listing page.
-        return <Box>
+      category.map((element, i) => {
+        /**
+         * Now that the logic for generating a box based on each category in the database has been created, each box's button now needs a unique handleClick
+         * handler. My logic was as follows: each handleClick will redirect to the same one page, but we will also drill down 'element' (which will be a string
+         * that is the category name). Then. on the listing page, send a GET request that makes a SQL query using the category name to pull all listings
+         * under that category (done via backend). Afterwards we can just add logic for displaying said listings. So we might need a middleware like
+         * getAllListingsByCategory or something.
+         */
+
+        return <Box categoryName={element}>
           <div className="category">
                 <div className="categoryCard">
                     <img></img>
@@ -46,7 +58,7 @@ return (
             <p></p>
             <p></p>
             
-            <Button>{element}</Button>
+            <Button onClick={() => {handleClickCategory(i)}}>{element}</Button>
         </Box>
       })
       

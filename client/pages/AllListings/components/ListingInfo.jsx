@@ -23,7 +23,7 @@ const ListingInfo = (props) => {
 
 return (
     <div>
-        {<img src={image}/>}
+        {<img src={props.item.img_url}/>}
         {/* <div>{listingData}</div> */}
         <div>{listingData.listing}</div>
         <div>${listingData.price}</div>
