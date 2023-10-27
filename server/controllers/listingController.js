@@ -80,6 +80,51 @@ listingController.getListing = async (req, res, next) => {
     }
 };
 
+listingController.getListingsByCategory = async (req, res, next) => {
+    const client = await pool.connect()
+        .catch(err => next({
+            log: `listingController - pool connection failed ERROR : ${err}`,
+            message: {
+                err: 'Error in listingController.getListing. Check server logs'
+            }
+        }));
+    try {
+        const { category } = req.params;
+        console.log(category)
+        if (!category) return next({
+            log: `listingController.getListingsByCategory - never received an ID in params ERROR : ${err}`,
+            message: {
+                err: 'Error in listingController.getListingsByGategory. Check server logs'
+            }
+        });
+        console.log(`passed in query param: ${category}`);
+        const getListingQuery = `SELECT l.product_title AS listing,
+            l.price,
+            l.category,
+            u.name AS seller,
+            l.img_url,
+            l.description
+        FROM listings l
+        JOIN users u
+            ON l.userid = u.userid
+        WHERE l.category = $1;`;
+
+        const response = await client.query(getListingQuery, [ category ]);
+        res.locals.listing = response.rows;
+    } catch (err) {
+        return next({
+            log: `listingController.getListingsByCategory - querying listing from db ERROR: ${err}`,
+            message: {
+                err: 'Error in listingController.getListingByCategory. Check server logs'
+            }
+        });
+    } finally {
+        client.release();
+        return next();
+    }
+};
+
+
 /**
  * Create a new listing
  * @param {*} req
