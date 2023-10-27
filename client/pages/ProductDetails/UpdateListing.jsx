@@ -29,24 +29,24 @@ export const UpdateListing = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [edit, setEdit] = useState(false);
   const { id } = useParams();
+  const [listingData, setListingData] = useState({})
 
   // Toggle in edit status
   const handleEdit = () => {
-    if (!edit){
+    if (!edit) {
       setEdit(true);
     }
     // Save the changes
     else {
-
     }
-  }
+  };
 
   /**
    * Handle delete button
    */
 
   // Fetch listing data
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
     refetchOnWindowFocus: false,
     queryFn: () =>
@@ -83,36 +83,50 @@ export const UpdateListing = (props) => {
         <Box sx={{ m: 1 }}>
           <h1>Listing Update</h1>
         </Box>
-        <Card sx={{ display: "flex" }}>
-          <CardMedia
-            component="img"
-            src={data.img_url} 
-            alt="Listing Image"
-            style={{maxWidth: '400px', maxHeight: '600px'}}
-          >
-          </CardMedia>
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            {!edit ? 
-            <>
-            <ListingText data={data}></ListingText>
-            <CardActions>
-              <Button size="small" color="primary">
-                Delete
-              </Button>
-              <Button size="small" color="primary" onClick={handleEdit}>
-                Edit
-              </Button>
-            </CardActions>
-            </>
-            : <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl} listingData={data} edit={edit} setEdit={setEdit}/>
-            }
-          </CardContent>
+        <Card sx={{ display: "flex", width: "100%" }}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <CardMedia
+                component="img"
+                src={data.img_url}
+                alt="Listing Image"
+                style={{ maxWidth: "400px", maxHeight: "600px" }}
+              ></CardMedia>
+            </Grid>
+            <Grid item xs={6}>
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              {!edit ? (
+                <>
+                  <ListingText data={data}></ListingText>
+                  <CardActions>
+                    <Button size="small" color="primary">
+                      Delete
+                    </Button>
+                    <Button size="small" color="primary" onClick={handleEdit}>
+                      Edit
+                    </Button>
+                  </CardActions>
+                </>
+              ) : (
+                <ListingForm
+                  imageUrl={imageUrl}
+                  setImageUrl={setImageUrl}
+                  listingData={data}
+                  edit={edit}
+                  setEdit={setEdit}
+                  refetch={refetch}
+                />
+              )}
+            </CardContent>
+
+            </Grid>
+          </Grid>
         </Card>
       </Box>
     </>

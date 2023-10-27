@@ -24,7 +24,7 @@ import { useNavigate, useParams } from "react-router-dom";
  * @param {string} listingData.img_url
  * @returns
  */
-export const ListingForm = ({ imageUrl, setImageUrl, listingData, edit }) => {
+export const ListingForm = ({ refetch, imageUrl, setImageUrl, listingData, edit, setEdit }) => {
   const [submitStatus, setSubmitStatus] = useState("pending");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -63,7 +63,25 @@ export const ListingForm = ({ imageUrl, setImageUrl, listingData, edit }) => {
 
       // Send POST request to server to add new listing
       // Stringify to send in POST request body
-      fetch("http://localhost:3000/api/listing/", {
+      edit ? 
+      fetch(`http://localhost:3000/api/listing/id/${listingData.listingid}`, {
+        method: "PATCH",
+        body: JSON.stringify(inputs),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) =>  {
+          refetch();
+          setEdit(false)
+        } )
+        .catch((error) => {
+          console.log(inputs);
+          console.error("Error:", error);
+          setSubmitStatus("error");
+        })
+      : fetch("http://localhost:3000/api/listing/", {
         method: "POST",
         body: JSON.stringify(inputs),
         headers: {
@@ -71,11 +89,7 @@ export const ListingForm = ({ imageUrl, setImageUrl, listingData, edit }) => {
         },
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          setSubmitStatus("success");
-          navigate(`/listing/update/${data.listingid}`)
-        })
+        .then((data) =>  navigate(`/listing/update/${data.listingid}`) )
         .catch((error) => {
           console.log(inputs);
           console.error("Error:", error);

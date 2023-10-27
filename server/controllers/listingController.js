@@ -60,7 +60,8 @@ listingController.getListing = async (req, res, next) => {
             u.name AS seller,
             l.img_url,
             l.description,
-            l.userid
+            l.userid,
+            l.listingid
         FROM listings l
         JOIN users u
             ON l.userid = u.userid
@@ -213,7 +214,7 @@ listingController.updateListing = async (req, res, next) => {
 
         const updateListingQuery = `UPDATE listings
             SET ${setColumns}
-            WHERE _id = $1
+            WHERE listingid = $1
             RETURNING *`;
 
         const response = await client.query(updateListingQuery, [id, ...newVals]);
