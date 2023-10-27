@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { CardActions, CardMedia } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
 import { useParams } from 'react-router-dom';
-import { ListingText } from './components/ListingText';
+import { ListingText } from './components/ListingText.jsx';
 
 /**
  * Product creation details page
