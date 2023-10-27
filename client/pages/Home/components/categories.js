@@ -16,8 +16,8 @@ const Categories = () => {
 const [category, setCategory] = useState([]);
 const navigate = useNavigate();
 //handleClick to be put in the button below to redirect to the specific page. This is working correctly.
-function handleClickCategory() {
-  navigate('/ListingsByCategory');
+function handleClickCategory(i){
+  navigate(`/ListingsByCategory/${category[i]}`);
 }
 
 useEffect(()=> {
@@ -37,7 +37,7 @@ return (
     <Container>
         
     {
-      category.map((element) => {
+      category.map((element, i) => {
         /**
          * Now that the logic for generating a box based on each category in the database has been created, each box's button now needs a unique handleClick
          * handler. My logic was as follows: each handleClick will redirect to the same one page, but we will also drill down 'element' (which will be a string
@@ -58,7 +58,7 @@ return (
             <p></p>
             <p></p>
             
-            <Button onClick={handleClickCategory}>{element}</Button>
+            <Button onClick={() => {handleClickCategory(i)}}>{element}</Button>
         </Box>
       })
       

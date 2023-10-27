@@ -54,18 +54,16 @@ listingController.getListing = async (req, res, next) => {
             }
         });
         console.log(`passed in query param: ${id}`);
-        const getListingQuery = `SELECT l.product_name AS listing,
+        const getListingQuery = `SELECT l.product_title AS listing,
             l.price,
-            l.quantity,
             l.category,
-            u.username AS seller,
-            u.city,
-            u.state,
+            u.name AS seller,
             l.img_url,
+            l.description
         FROM listings l
         JOIN users u
-            ON l.seller_id = u._id
-        WHERE l._id = $1;`;
+            ON l.userid = u.userid
+        WHERE l.listingid = $1;`;
 
         const response = await client.query(getListingQuery, [ id ]);
         res.locals.listing = response.rows[0];
@@ -81,6 +79,51 @@ listingController.getListing = async (req, res, next) => {
         return next();
     }
 };
+
+listingController.getListingsByCategory = async (req, res, next) => {
+    const client = await pool.connect()
+        .catch(err => next({
+            log: `listingController - pool connection failed ERROR : ${err}`,
+            message: {
+                err: 'Error in listingController.getListing. Check server logs'
+            }
+        }));
+    try {
+        const { category } = req.params;
+        console.log(category)
+        if (!category) return next({
+            log: `listingController.getListingsByCategory - never received an ID in params ERROR : ${err}`,
+            message: {
+                err: 'Error in listingController.getListingsByGategory. Check server logs'
+            }
+        });
+        console.log(`passed in query param: ${category}`);
+        const getListingQuery = `SELECT l.product_title AS listing,
+            l.price,
+            l.category,
+            u.name AS seller,
+            l.img_url,
+            l.description
+        FROM listings l
+        JOIN users u
+            ON l.userid = u.userid
+        WHERE l.category = $1;`;
+
+        const response = await client.query(getListingQuery, [ category ]);
+        res.locals.listing = response.rows;
+    } catch (err) {
+        return next({
+            log: `listingController.getListingsByCategory - querying listing from db ERROR: ${err}`,
+            message: {
+                err: 'Error in listingController.getListingByCategory. Check server logs'
+            }
+        });
+    } finally {
+        client.release();
+        return next();
+    }
+};
+
 
 /**
  * Create a new listing
