@@ -13,6 +13,12 @@ import { CardActions, CardMedia } from "@material-ui/core";
 import Grid from "@mui/material/Grid";
 import { useParams } from "react-router-dom";
 import { ListingText } from "./components/ListingText";
+/**
+ * TODO
+ * - [ ] Cancel button for listing edit
+ * - [ ] Listing edit form must update instead of create new listing
+ * - [ ] Populate image URL of current image into form
+ */
 
 /**
  * Product creation details page
