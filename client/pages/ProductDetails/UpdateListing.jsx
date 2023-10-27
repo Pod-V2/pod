@@ -21,7 +21,25 @@ import { ListingText } from "./components/ListingText";
  */
 export const UpdateListing = (props) => {
   const [imageUrl, setImageUrl] = useState("");
+  const [edit, setEdit] = useState(false);
   const { id } = useParams();
+
+  // Toggle in edit status
+  const handleEdit = () => {
+    if (!edit){
+      setEdit(true);
+    }
+    // Save the changes
+    else {
+
+    }
+  }
+
+  /**
+   * Handle delete button
+   */
+
+  // Fetch listing data
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     refetchOnWindowFocus: false,
@@ -30,6 +48,7 @@ export const UpdateListing = (props) => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
+          setImageUrl(res.img_url);
           return res;
         }),
   });
@@ -63,7 +82,7 @@ export const UpdateListing = (props) => {
             component="img"
             src={data.img_url} 
             alt="Listing Image"
-            style={{maxWidth: '400px'}}
+            style={{maxWidth: '400px', maxHeight: '600px'}}
           >
           </CardMedia>
           <CardContent
@@ -73,15 +92,20 @@ export const UpdateListing = (props) => {
               justifyContent: "space-between",
             }}
           >
+            {!edit ? 
+            <>
             <ListingText data={data}></ListingText>
             <CardActions>
               <Button size="small" color="primary">
                 Delete
               </Button>
-              <Button size="small" color="primary">
+              <Button size="small" color="primary" onClick={handleEdit}>
                 Edit
               </Button>
             </CardActions>
+            </>
+            : <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl} listingData={data} />
+            }
           </CardContent>
         </Card>
       </Box>
