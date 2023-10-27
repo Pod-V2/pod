@@ -28,5 +28,24 @@ userController.getUser = async (req, res, next) => {
     }
 }
 
+userController.getUserListings = async (req, res, next) => {
+    const client = await pool.connect().then(console.log('Connected to DB'))
+    .catch(err => next({
+      log: `authController - pool connection failed; ERROR: ${err}`,
+      message: {
+        err: "Error in authController.createUser. Check server logs",
+      },
+    }));
+    try {
+        const listingsQuery = `SELECT * FROM listings WHERE userid=$1`
+        const response = await client.query(listingsQuery, [ req.cookies.userId ])
+        res.locals.listingArr = response.rows;
+        console.log(response.rows);
+        return next()
+    } catch (err) {
+        if(err) return next(err);
+    }
+}
+
 
 module.exports = userController;

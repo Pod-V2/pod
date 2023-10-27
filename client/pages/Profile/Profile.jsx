@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import Header from '../../common/Header.jsx';
 import { Typography } from '@mui/material';
 import styled from 'styled-components';
+import ListingCard from './ListingCards.jsx';
 
 
 export default function Profile() {
     const [ userInfo, setUserInfo ] = useState()
+    const [ listingInfo, setListingInfo ] = useState();
     const [ loading, setLoading ] = useState();
 
     useEffect(() => {
@@ -18,23 +20,29 @@ export default function Profile() {
                 throw response
             })
             .then(data => {
-                setUserInfo(data);
+                console.log(data)
+                setUserInfo(data.userInfo);
+                setListingInfo(data.listingInfo)
+                // listingInfo.forEach((listing) => {
+                //     listingArr.push(<ListingCard image={listing.image_url} title={listing.product_title} prodcut_title={listing.product_listing} price={listing.price}/>)
+                // })
             })
             .catch(err => {
                 console.log(err)
             })
-            .finally(() => {
-                setLoading(false)
-            })
     }, [])
 
-    const flag = userInfo?.name;
+    const userFlag = userInfo?.name;
+    const listingFlag = listingArr?.length;
 
+    const listingArr = [];
+
+    
     
     return (
         <div>
             <Header/>
-            {!flag ? <h1>Loading...</h1> : 
+            {!userFlag ? <h1>Loading...</h1> : 
             <div>
                 <Typography variant='h2' align='center' sx={{
                     minHeight: '100px'
@@ -43,11 +51,13 @@ export default function Profile() {
                 </Typography>
                 <hr/>
                 <CardContainer>
-                    <h2>Your current Listings</h2>
+                    <StyledHeader>Your current Listings</StyledHeader>
+                    <ListingCard/>
                 </CardContainer>
                 <hr/>
                 <CardContainer>
-                    <h2>Previous Orders</h2>
+                    <StyledHeader>Previous Orders</StyledHeader>
+                    <ListingCard/>
                 </CardContainer>
             </div>
         }
@@ -57,4 +67,8 @@ export default function Profile() {
 
 const CardContainer = styled.div`
     min-height: 400px
+`
+
+const StyledHeader = styled.h2`
+    margin: 5px
 `
