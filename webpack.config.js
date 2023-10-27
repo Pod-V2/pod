@@ -56,5 +56,5 @@ module.exports = {
         open : true,
         historyApiFallback: true
     },
-    devtool: 'source-map'
+    devtool: 'eval-cheap-module-source-map'
 };
