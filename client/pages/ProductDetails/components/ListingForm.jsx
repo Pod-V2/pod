@@ -9,16 +9,25 @@ import Stack from "@mui/material/Stack";
 import { debounce_leading } from "../debounce.js";
 import SendIcon from "@mui/icons-material/Send";
 import { Send } from "@mui/icons-material";
-
+import { useNavigate, useParams } from "react-router-dom";
 
 /**
  * Product creation details page
  * @param {string} imageUrl URL of uploaded image
  * @param {function} setImageUrl setter for imageUrl
+ * @param {Object} listingData object of listing data to pre-fill form
+ * @param {string} listingData.userid
+ * @param {string} listingData.listing product_title
+ * @param {string} listingData.price
+ * @param {string} listingData.description
+ * @param {string} listingData.category
+ * @param {string} listingData.img_url
  * @returns
  */
-export const ListingForm = ({ imageUrl, setImageUrl }) => {
+export const ListingForm = ({ imageUrl, setImageUrl, listingData }) => {
   const [submitStatus, setSubmitStatus] = useState("pending");
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   /**
    * Submit inputs state variable to /api/listing to create a new listing
@@ -65,13 +74,14 @@ export const ListingForm = ({ imageUrl, setImageUrl }) => {
         .then((data) => {
           console.log(data);
           setSubmitStatus("success");
+          navigate(`/listing/update/${data.id}`)
         })
         .catch((error) => {
           console.log(inputs);
           console.error("Error:", error);
           setSubmitStatus("error");
         });
-    }),
+    })
   );
 
   const debouncedSubmit = (e) => {
@@ -114,8 +124,17 @@ export const ListingForm = ({ imageUrl, setImageUrl }) => {
           className="input"
           type="text"
           name="product_title"
+          defaultValue={listingData ? listingData.listing : ""}
         />
-        <TextField fullWidth required label="Price" className="input" type="number" name="price" />
+        <TextField
+          fullWidth
+          required
+          label="Price"
+          className="input"
+          type="number"
+          name="price"
+          defaultValue={listingData ? listingData.price : ""}
+        />
         <TextField
           fullWidth
           required
@@ -123,8 +142,16 @@ export const ListingForm = ({ imageUrl, setImageUrl }) => {
           className="input"
           type="text"
           name="category"
+          defaultValue={listingData ? listingData.category : ""}
         />
-        <TextField fullWidth label="Seller ID" className="input" type="text" name="userid" />
+        <TextField
+          fullWidth
+          label="Seller ID"
+          className="input"
+          type="text"
+          name="userid"
+          defaultValue={listingData ? listingData.userid : ""}
+        />
         <TextField
           fullWidth
           required
@@ -134,6 +161,7 @@ export const ListingForm = ({ imageUrl, setImageUrl }) => {
           maxRows={20}
           type="text"
           name="description"
+          defaultValue={listingData ? listingData.description : ""}
         />
         <ListingInputsImage imageUrl={imageUrl} setImageUrl={setImageUrl} />
         <Button variant="contained" type="submit" endIcon={<SendIcon />}>
