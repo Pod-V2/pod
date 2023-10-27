@@ -35,7 +35,6 @@ const Pages = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/listing/" element={<AllListings/>}/>
-          <Route path ="/listing/:id" element={<AllListings />} />
           <Route path="/listing/create" element={<CreateListing />} />
           <Route path="/listing/update/:id" element={<UpdateListing />} />
           <Route path="/cart" element={<Cart />} />
