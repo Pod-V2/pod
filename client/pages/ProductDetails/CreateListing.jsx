@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ListingInputsImage from "./components/ListingInputsImage.jsx";
 import { CardContent, FormControl, FormLabel } from "@mui/material";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { ListingForm } from "./components/ListingForm.jsx";

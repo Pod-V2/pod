@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ListingInputsImage from './components/ListingInputsImage.jsx';
 import { CardContent, FormControl, FormLabel } from '@mui/material';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import { ListingForm } from './components/ListingForm.jsx';
 import PrimarySearchAppBar from '../../common/Header.jsx';
 import { useQuery } from '@tanstack/react-query';
-import Typography from '@mui/material/Typography';
 import { CardActions, CardMedia } from '@material-ui/core';
-import Grid from '@mui/material/Grid';
 import { useParams } from 'react-router-dom';
 import { ListingText } from './components/ListingText.jsx';
 
