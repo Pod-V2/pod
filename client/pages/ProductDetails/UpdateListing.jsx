@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import ListingInputsImage from './components/ListingInputsImage.jsx';
-import { CardContent, FormControl, FormLabel } from '@mui/material';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import { ListingForm } from './components/ListingForm.jsx';
-import PrimarySearchAppBar from '../../common/Header.jsx';
-import { useQuery } from '@tanstack/react-query';
-import Typography from '@mui/material/Typography';
-import { CardActions, CardMedia } from '@material-ui/core';
-import Grid from '@mui/material/Grid';
-import { useParams } from 'react-router-dom';
-import { ListingText } from './components/ListingText';
+import React, { useEffect, useState } from "react";
+import ListingInputsImage from "./components/ListingInputsImage.jsx";
+import { CardContent, FormControl, FormLabel } from "@mui/material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import { ListingForm } from "./components/ListingForm.jsx";
+import PrimarySearchAppBar from "../../common/Header.jsx";
+import { useQuery } from "@tanstack/react-query";
+import Typography from "@mui/material/Typography";
+import { CardActions, CardMedia } from "@material-ui/core";
+import Grid from "@mui/material/Grid";
+import { useParams } from "react-router-dom";
+import { ListingText } from "./components/ListingText";
 
 /**
  * Product creation details page
@@ -20,58 +20,73 @@ import { ListingText } from './components/ListingText';
  * @returns
  */
 export const UpdateListing = (props) => {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
   const { id } = useParams();
   const { isPending, error, data } = useQuery({
-    queryKey: ['repoData'],
+    queryKey: ["repoData"],
     refetchOnWindowFocus: false,
-    queryFn: () => fetch(`http://localhost:3000/api/listing/${id}`).then((res) => res.json(),).then((res) => {
-      console.log(res);
-      return res;
-    })
+    queryFn: () =>
+      fetch(`http://localhost:3000/api/listing/id/${id}`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          return res;
+        }),
   });
 
   if (isPending) {
-    return (<>
-      <PrimarySearchAppBar/>
-      <div>'Loading...'</div>
-    </>);
+    return (
+      <>
+        <PrimarySearchAppBar />
+        <div>'Loading...'</div>
+      </>
+    );
   }
-  if (error) return 'An error has occurred in fetching listings: ' + error.message;
+  if (error)
+    return "An error has occurred in fetching listings: " + error.message;
 
-  return (<>
-    <PrimarySearchAppBar/>
-    <Box
-      sx={{ m: 1 }}
-      flexDirection="column"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Box sx={{ m: 1 }}>
-        <h1>Listing Update</h1>
+  return (
+    <>
+      <PrimarySearchAppBar />
+      <Box
+        sx={{ m: 1 }}
+        flexDirection="column"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Box sx={{ m: 1 }}>
+          <h1>Listing Update</h1>
+        </Box>
+        <Card sx={{ display: "flex" }}>
+          <CardMedia
+            component="img"
+            src={data.img_url} 
+            alt="Listing Image"
+            style={{maxWidth: '400px'}}
+          >
+          </CardMedia>
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <ListingText data={data}></ListingText>
+            <CardActions>
+              <Button size="small" color="primary">
+                Delete
+              </Button>
+              <Button size="small" color="primary">
+                Edit
+              </Button>
+            </CardActions>
+          </CardContent>
+        </Card>
       </Box>
-      <Card sx={{ display: 'flex' }}>
-        <CardMedia
-          component="img"
-          image={data.img_url}
-          alt="green iguana"
-          sx={{ maxHeight: 600 }}
-        />
-        <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <ListingText data={data}></ListingText>
-          <CardActions>
-            <Button size="small" color="primary">
-              Delete
-            </Button>
-            <Button size="small" color="primary">
-              Edit
-            </Button>
-          </CardActions>
-        </CardContent>
-      </Card>
-    </Box>
-  </>);
+    </>
+  );
 };
 
 export default UpdateListing;
