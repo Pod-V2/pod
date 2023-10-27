@@ -22,6 +22,7 @@ app.use('/', express.static(path.join(__dirname, '../dist')));
 
 
 app.use("/api/listing", listingRouter);
+//think we need a router for the location ListingsByCategory in order to render the page.
 app.use("/api/image", imageRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/cart", cartRouter);
