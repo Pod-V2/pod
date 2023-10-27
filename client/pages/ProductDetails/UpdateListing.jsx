@@ -110,7 +110,7 @@ export const UpdateListing = (props) => {
               </Button>
             </CardActions>
             </>
-            : <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl} listingData={data} />
+            : <ListingForm imageUrl={imageUrl} setImageUrl={setImageUrl} listingData={data} edit={edit} setEdit={setEdit}/>
             }
           </CardContent>
         </Card>

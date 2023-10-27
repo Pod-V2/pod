@@ -24,7 +24,7 @@ import { useNavigate, useParams } from "react-router-dom";
  * @param {string} listingData.img_url
  * @returns
  */
-export const ListingForm = ({ imageUrl, setImageUrl, listingData }) => {
+export const ListingForm = ({ imageUrl, setImageUrl, listingData, edit }) => {
   const [submitStatus, setSubmitStatus] = useState("pending");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -74,7 +74,7 @@ export const ListingForm = ({ imageUrl, setImageUrl, listingData }) => {
         .then((data) => {
           console.log(data);
           setSubmitStatus("success");
-          navigate(`/listing/update/${data.id}`)
+          navigate(`/listing/update/${data.listingid}`)
         })
         .catch((error) => {
           console.log(inputs);
