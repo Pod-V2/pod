@@ -8,8 +8,9 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { debounce_leading } from "../debounce.js";
 import SendIcon from "@mui/icons-material/Send";
-import { Send } from "@mui/icons-material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate, useParams } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 
 /**
  * Product creation details page
@@ -63,38 +64,38 @@ export const ListingForm = ({ refetch, imageUrl, setImageUrl, listingData, edit,
 
       // Send POST request to server to add new listing
       // Stringify to send in POST request body
-      edit ? 
-      fetch(`http://localhost:3000/api/listing/id/${listingData.listingid}`, {
-        method: "PATCH",
-        body: JSON.stringify(inputs),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) =>  {
-          refetch();
-          setEdit(false)
-        } )
-        .catch((error) => {
-          console.log(inputs);
-          console.error("Error:", error);
-          setSubmitStatus("error");
+      edit ?
+        fetch(`http://localhost:3000/api/listing/id/${listingData.listingid}`, {
+          method: "PATCH",
+          body: JSON.stringify(inputs),
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-      : fetch("http://localhost:3000/api/listing/", {
-        method: "POST",
-        body: JSON.stringify(inputs),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) =>  navigate(`/listing/update/${data.listingid}`) )
-        .catch((error) => {
-          console.log(inputs);
-          console.error("Error:", error);
-          setSubmitStatus("error");
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            refetch();
+            setEdit(false)
+          })
+          .catch((error) => {
+            console.log(inputs);
+            console.error("Error:", error);
+            setSubmitStatus("error");
+          })
+        : fetch("http://localhost:3000/api/listing/", {
+          method: "POST",
+          body: JSON.stringify(inputs),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => navigate(`/listing/update/${data.listingid}`))
+          .catch((error) => {
+            console.log(inputs);
+            console.error("Error:", error);
+            setSubmitStatus("error");
+          });
     })
   );
 
@@ -102,6 +103,15 @@ export const ListingForm = ({ refetch, imageUrl, setImageUrl, listingData, edit,
     e.preventDefault();
     handleSubmit(e);
   };
+
+  const handleCancel = (e) => {
+    if (edit) {
+      setEdit(false);
+    }
+    else{
+      navigate('/listing')
+    }
+  }
 
   /**
    * Request schema
@@ -178,9 +188,14 @@ export const ListingForm = ({ refetch, imageUrl, setImageUrl, listingData, edit,
           defaultValue={listingData ? listingData.description : ""}
         />
         <ListingInputsImage imageUrl={imageUrl} setImageUrl={setImageUrl} />
-        <Button variant="contained" type="submit" endIcon={<SendIcon />}>
-          Submit
-        </Button>
+        <Grid display="flex" justifyContent="center" spacing={2}>
+          <Button variant="contained" type="submit" endIcon={<SendIcon />}>
+            Submit
+          </Button>
+          <Button variant="contained" color="error" onClick={handleCancel} endIcon={<DeleteIcon />}>
+            Cancel
+          </Button>
+        </Grid>
         {/* <input className="listingsInputs" type="submit" value="Submit" /> */}
       </FormControl>
     </Box>
