@@ -7,13 +7,14 @@ const storage = new Storage({
   projectId: process.env.GC_PROJECT_ID,
 });
 
-const bucket = storage.bucket(process.env.BUCKET_NAME);
+const bucketName = process.env.BUCKET_NAME;
+const bucket = storage.bucket(bucketName);
 
 /**
   * Receive a file as Buffer and file info as file-type output.
   * Upload file to Google Cloud Storage bucket.
   * @param {Buffer} file - image file to be uploaded
-  * @param {Object} fileInfo - output from file-type 
+  * @param {Object} fileInfo - output from file-type
   * @param {string} fileInfo.ext - file extension
   * @param {string} userid - user ID to generate unique file name
   */
@@ -29,5 +30,11 @@ async function uploadImage(file, fileInfo, userid='') {
   const imageUrl = process.env.BUCKET_URL+fileName;
   return imageUrl;
 }
+
+async function deleteFile(fileName) {
+  await storage.bucket(bucketName).file(fileName).delete();
+  console.log(`gs://${bucketName}/${fileName} deleted`);
+}
+
 
 module.exports = uploadImage;

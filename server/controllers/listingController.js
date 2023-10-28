@@ -11,7 +11,7 @@ listingController.getAllListings = async (req, res, next) => {
             }
         }));
     try {
-        const listingsQuery = `SELECT l.product_title AS listing,
+        const listingsQuery = `SELECT l.product_title,
             l.price,
             l.category,
             u.name AS seller,
@@ -129,16 +129,16 @@ listingController.getListingsByCategory = async (req, res, next) => {
 
 /**
  * Create a new listing
- * @param {*} req 
+ * @param {*} req
  * @param {string} req.body.userid
  * @param {string} req.body.product_title
  * @param {string} req.body.price
  * @param {string} req.body.description
  * @param {string} req.body.category
  * @param {string} req.body.img_url
- * @param {*} res 
- * @param {*} next 
- * @returns 
+ * @param {*} res
+ * @param {*} next
+ * @returns
  */
 listingController.createListing = async (req, res, next) => {
     const client = await pool.connect()
