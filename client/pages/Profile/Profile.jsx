@@ -35,7 +35,7 @@ export default function Profile() {
     const listingArr = [];
 
     listingInfo?.forEach((listing) => {
-        listingArr.push(<ListingCard key={listing.listingid} productTitle={listing.product_title} price={listing.price} description={listing.description} imgUrl={listing.img_url} />)
+        listingArr.push(<ListingCard key={listing.listingid} id={listing.listingid} productTitle={listing.product_title} price={listing.price} description={listing.description} imgUrl={listing.img_url} />)
         console.log(listingArr)
     })
 
