@@ -16,8 +16,8 @@ import { ListingText } from "./components/ListingText";
 /**
  * TODO
  * - [ ] Cancel button for listing edit
- * - [ ] Listing edit form must update instead of create new listing
- * - [ ] Populate image URL of current image into form
+ * - [x] Listing edit form must update instead of create new listing
+ * - [x] Populate image URL of current image into form
  */
 
 /**
@@ -84,46 +84,48 @@ export const UpdateListing = (props) => {
           <h1>Listing Update</h1>
         </Box>
         <Card sx={{ display: "flex", width: "100%" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <CardMedia
-                component="img"
-                src={data.img_url}
-                alt="Listing Image"
-                style={{ maxWidth: "400px", maxHeight: "600px" }}
-              ></CardMedia>
+          <Grid container spacing={2} >
+            <Grid item xs={6} >
+              <div style={{ display: 'flex', justifyContent: 'center' }} >
+                <CardMedia
+                  component="img"
+                  src={data.img_url}
+                  alt="Listing Image"
+                  style={{ maxWidth: "400px", maxHeight: "600px" }}
+                ></CardMedia>
+              </div>
             </Grid>
             <Grid item xs={6}>
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              {!edit ? (
-                <>
-                  <ListingText data={data}></ListingText>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      Delete
-                    </Button>
-                    <Button size="small" color="primary" onClick={handleEdit}>
-                      Edit
-                    </Button>
-                  </CardActions>
-                </>
-              ) : (
-                <ListingForm
-                  imageUrl={imageUrl}
-                  setImageUrl={setImageUrl}
-                  listingData={data}
-                  edit={edit}
-                  setEdit={setEdit}
-                  refetch={refetch}
-                />
-              )}
-            </CardContent>
+              <CardContent
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                {!edit ? (
+                  <>
+                    <ListingText data={data}></ListingText>
+                    <CardActions>
+                      <Button size="small" color="error">
+                        Delete
+                      </Button>
+                      <Button size="small" color="primary" onClick={handleEdit}>
+                        Edit
+                      </Button>
+                    </CardActions>
+                  </>
+                ) : (
+                  <ListingForm
+                    imageUrl={imageUrl}
+                    setImageUrl={setImageUrl}
+                    listingData={data}
+                    edit={edit}
+                    setEdit={setEdit}
+                    refetch={refetch}
+                  />
+                )}
+              </CardContent>
 
             </Grid>
           </Grid>
