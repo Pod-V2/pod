@@ -6,6 +6,7 @@ import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import Cart from "../Cart/Cart";
 import LandingPage from "../LandingPage/LandingPage.jsx";
+import Profile from '../Profile/Profile.jsx';
 import { CreateListing } from "../ProductDetails/CreateListing.jsx";
 import { UpdateListing } from "../ProductDetails/UpdateListing.jsx";
 import { ListingDetails } from '../ProductDetails/ListingDetails.jsx';
@@ -26,6 +27,7 @@ const Pages = () => {
           <Route path="/cart"  element={<Cart/>}/>
           <Route path="/listing/create" element={<CreateListing />} />
           <Route path="/listing/update/:id" element={<UpdateListing />} />
+          <Route path='/profile' element={<Profile/>}/>
           <Route path="/ListingsByCategory/:category" element={<ListingsByCategory/>}/>
         </Routes>
       </Router>
