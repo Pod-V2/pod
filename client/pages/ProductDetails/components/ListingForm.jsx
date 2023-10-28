@@ -130,7 +130,7 @@ export const ListingForm = ({ refetch, imageUrl, setImageUrl, listingData, edit,
       }}
       onSubmit={debouncedSubmit}
     >
-      <Stack sx={{ width: "100%" }} spacing={2}>
+      <Stack sx={{ width: "100%" }} >
         {submitStatus === "error" && (
           <Alert severity="error">
             There was an error creating your listing. Please try again.
@@ -188,7 +188,7 @@ export const ListingForm = ({ refetch, imageUrl, setImageUrl, listingData, edit,
           defaultValue={listingData ? listingData.description : ""}
         />
         <ListingInputsImage imageUrl={imageUrl} setImageUrl={setImageUrl} />
-        <Grid display="flex" justifyContent="center" spacing={2}>
+        <Grid display="flex" justifyContent="center">
           <Button variant="contained" type="submit" endIcon={<SendIcon />}>
             Submit
           </Button>
