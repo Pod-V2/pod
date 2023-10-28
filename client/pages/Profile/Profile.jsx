@@ -42,11 +42,12 @@ export default function Profile() {
     
     
     return (
+        <>
+        <Header/>
         <div>
             
             {!userFlag ? <h1>Loading...</h1> : 
             <div>
-                <Header/>
                 <Typography variant='h2' align='center' sx={{
                     minHeight: '100px'
                 }}>
@@ -67,6 +68,7 @@ export default function Profile() {
             </div>
         }
         </div>
+        </>
     )
 }
 
