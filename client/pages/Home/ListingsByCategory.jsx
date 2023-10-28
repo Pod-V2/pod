@@ -69,7 +69,7 @@ const ListingsByCategory = (props) => {
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
-                    {element.listing}
+                    ${element.price} {element.listing}
                   </Typography>
                   <Typography
                     variant="body2"
