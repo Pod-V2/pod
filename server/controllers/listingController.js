@@ -60,6 +60,7 @@ listingController.getListing = async (req, res, next) => {
             u.name AS seller,
             l.img_url,
             l.description,
+            l.userid,
             l.listingid
         FROM listings l
         JOIN users u
@@ -151,10 +152,11 @@ listingController.createListing = async (req, res, next) => {
     try {
         const createListingQuery = `INSERT INTO listings
                 (product_title, price, category, userid, description, img_url)
-            VALUES ($1, $2, $3, $4, $5, $6)`;
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING listingid`;
         // console.log('request body: ', req.body);
 
-        await client.query(createListingQuery, [
+        const newId = await client.query(createListingQuery, [
             req.body.product_title,
             req.body.price,
             req.body.category,
@@ -162,6 +164,8 @@ listingController.createListing = async (req, res, next) => {
             req.body.description,
             req.body.img_url
         ]);
+        console.log(`New listing with ID ${newId.rows[0].listingid} created.`)
+        res.locals.listingid = newId.rows[0].listingid;
     } catch (err) {
         return next({
             log: `listingController.createListing - inserting into listings table ERROR: ${err}`,
@@ -211,7 +215,7 @@ listingController.updateListing = async (req, res, next) => {
 
         const updateListingQuery = `UPDATE listings
             SET ${setColumns}
-            WHERE _id = $1
+            WHERE listingid = $1
             RETURNING *`;
 
         const response = await client.query(updateListingQuery, [id, ...newVals]);

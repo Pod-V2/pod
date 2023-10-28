@@ -46,7 +46,7 @@ return (
          * getAllListingsByCategory or something.
          */
 
-        return <Box categoryName={element}>
+        return <Box>
           <div className="category">
                 <div className="categoryCard">
                     <img></img>

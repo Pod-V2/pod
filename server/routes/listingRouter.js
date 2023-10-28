@@ -19,7 +19,7 @@ router.get("/category/:category", listingController.getListingsByCategory, (req,
 router.post("/", listingController.createListing, (req, res) => {
   return res
     .status(200)
-    .json({ status: "success", message: "Successfully created new listing!" });
+    .json({ listingid: res.locals.listingid, status: "success", message: "Successfully created new listing!" });
 });
 
 router.patch("/id/:id", listingController.updateListing, (req, res) => {

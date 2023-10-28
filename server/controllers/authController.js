@@ -64,9 +64,9 @@ authController.verifyUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) return res.redirect('/login/?Error=missing_info');
-    const userQuery = `SELECT email, password FROM users WHERE email = $1`;
+    const userQuery = `SELECT * FROM users WHERE email = $1`;
     const response = await client.query(userQuery, [ email ]);
-    console.log(response)
+    res.locals.userId = response.rows[0].userid;
     const passwordMatch = await bcrypt.compare(password, response.rows[0].password);
     if (!passwordMatch) res.status(401).send('Login failed, incorrect email or password');
     else {
@@ -82,5 +82,10 @@ authController.verifyUser = async (req, res, next) => {
     });
   }
 };
+
+authController.setCookie = (req, res, next) => {
+  res.cookie('userId', res.locals.userId, { httpOnly: true });
+  return next();
+}
 
 module.exports = authController;

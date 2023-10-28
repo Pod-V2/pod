@@ -30,14 +30,14 @@ const Home = () => {
         <p>Search by categories below</p>
       </Text>
 
-      <Search>
+      {/* <Search>
         <span>All Categories</span>
         <hr />
         <input type="text" placeholder="search" />
         <button>
           <BiSearch />
         </button>
-      </Search>
+      </Search> */}
 
       <hr />
       <Container>

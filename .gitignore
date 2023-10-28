@@ -5,3 +5,5 @@ dist/*.js
 dist/
 **/gcs_key.json
 .idea
+.vscode
+.idx

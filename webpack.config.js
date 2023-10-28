@@ -21,6 +21,9 @@ module.exports = {
                 },
                 resolve: {
                     extensions: ["", ".js", ".jsx"]
+                },
+                resolve: {
+                    extensions: ["", ".js", ".jsx"]
                 }
             },
             {
@@ -56,5 +59,5 @@ module.exports = {
         open : true,
         historyApiFallback: true
     },
-    devtool: 'source-map'
+    devtool: 'eval-cheap-module-source-map'
 };
