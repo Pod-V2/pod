@@ -31,11 +31,13 @@ userController.getUser = async (req, res, next) => {
       return res.status(401).send("Unable to get user info, log in again");
     else {
       res.locals.userInfo = response.rows[0];
-      client.release();
-      return next();
     }
   } catch (err) {
     if (err) return next(err);
+  }
+  finally {
+    client.release();
+    return next();
   }
 };
 
@@ -56,9 +58,11 @@ userController.getUserListings = async (req, res, next) => {
     const response = await client.query(listingsQuery, [req.cookies.userId]);
     res.locals.listingArr = response.rows;
     console.log(response.rows);
-    return next();
   } catch (err) {
     if (err) return next(err);
+  } finally {
+    client.release();
+    return next();
   }
 };
 
