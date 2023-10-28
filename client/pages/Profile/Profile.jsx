@@ -23,9 +23,6 @@ export default function Profile() {
                 console.log(data)
                 setUserInfo(data.userInfo);
                 setListingInfo(data.listingInfo)
-                // listingInfo.forEach((listing) => {
-                //     listingArr.push(<ListingCard image={listing.image_url} title={listing.product_title} prodcut_title={listing.product_listing} price={listing.price}/>)
-                // })
             })
             .catch(err => {
                 console.log(err)
@@ -33,17 +30,23 @@ export default function Profile() {
     }, [])
 
     const userFlag = userInfo?.name;
-    const listingFlag = listingArr?.length;
+    const listingFlag = listingArr?.length
 
     const listingArr = [];
+
+    listingInfo?.forEach((listing) => {
+        listingArr.push(<ListingCard key={listing.listingid} productTitle={listing.product_title} price={listing.price} description={listing.description} imgUrl={listing.img_url} />)
+        console.log(listingArr)
+    })
 
     
     
     return (
         <div>
-            <Header/>
+            
             {!userFlag ? <h1>Loading...</h1> : 
             <div>
+                <Header/>
                 <Typography variant='h2' align='center' sx={{
                     minHeight: '100px'
                 }}>
@@ -52,12 +55,14 @@ export default function Profile() {
                 <hr/>
                 <CardContainer>
                     <StyledHeader>Your current Listings</StyledHeader>
-                    <ListingCard/>
+                    <SideScroll>
+                        {listingArr}
+                    </SideScroll>
                 </CardContainer>
                 <hr/>
                 <CardContainer>
                     <StyledHeader>Previous Orders</StyledHeader>
-                    <ListingCard/>
+                    {listingArr[0]}
                 </CardContainer>
             </div>
         }
@@ -66,9 +71,16 @@ export default function Profile() {
 }
 
 const CardContainer = styled.div`
-    min-height: 400px
+    min-height: 400px;
 `
 
 const StyledHeader = styled.h2`
     margin: 5px
+`
+
+const SideScroll = styled.div`
+display: flex;
+overflow-y: scroll;
+width: 100%;
+margin-right: 15px;
 `
