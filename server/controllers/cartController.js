@@ -27,7 +27,8 @@ cartController.getUserCart = async (req, res, next) => {
             }
         }));
     try {
-        const { id } = req.query;
+        const id = req.cookies.userId;
+        // const { id } = req.query;
         console.log('~ ~ ~ id: ', id);
         if (!id) return next({
             log: `cartController.getUserCart - never received an ID in query`,
@@ -35,7 +36,7 @@ cartController.getUserCart = async (req, res, next) => {
                 err: 'Error in cartController.getUserCart. Check server logs'
             }
         });
-        console.log(`passed in query param: ${id}`);
+        console.log(`userId from cookies: ${id}`);
         // const userCartQuery = `SELECT l.product_title, l.price, c.numberOfItems AS qty
         // FROM carts c
         // JOIN users u
@@ -119,6 +120,7 @@ cartController.updateUserCart = async (req, res, next) => {
             }
         }));
     try {
+
         const { userId, listingId, qty } = req.query;
         if (!userId || !listingId || !qty) return next({
             log: `cartController.updateUserCart - never received user and/or listing ID(s) and/or qty in query ERROR`,
@@ -163,7 +165,8 @@ cartController.updateListingOfUserCart = async (req, res, next) => {
     try {
         console.log('req.query from cartController.updateListingOfUserCart: ', req.query);
         console.log('req.body from cartController.updateListingOfUserCart: ', req.body);
-        const { userId } = req.query;
+        const userId = req.cookies.userId;
+        // const { userId } = req.query;
         const listingIds = req.body;
         if (!userId || !listingIds) return next({
             log: `cartController.updateListingOfUserCart - never received user and/or listing ID(s) and/or qty in query ERROR`,
@@ -208,7 +211,8 @@ cartController.removeCartItem = async (req, res, next) => {
             }
         }));
     try {
-        const { userId, listingId } = req.query;
+        const userId = req.cookies.userId;
+        const { listingId } = req.query;
         console.log('<> userId, listingId: ', userId, listingId);
         if (!userId || !listingId) return next({
             log: `cartController.removeCartItem - never received user and/or listing ID(s) in query ERROR`,

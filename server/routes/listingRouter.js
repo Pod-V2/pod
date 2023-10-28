@@ -6,14 +6,10 @@ const cartController = require("../controllers/cartController");
 router.get("/", listingController.getAllListings, (req, res) => {
   console.log(res.locals.listings);
   return res.status(200).json(res.locals.listings);
-  // return res.status(200).json([{name: 'test'}, {name: 'test2'}]);
 });
 
-router.get("/id/:id", listingController.getListing, (req, res) => {
-  return res.status(200).json(res.locals.listing);
-});
-
-router.get("/category/:category", listingController.getListingsByCategory, (req, res) => {
+router.get("/userlisting", listingController.getListing, (req, res) => {
+  console.log('> hello from /api/listing/:id route');
   return res.status(200).json(res.locals.listing);
 });
 

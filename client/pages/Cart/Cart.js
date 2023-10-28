@@ -33,7 +33,7 @@ const Cart = () => {
         // alert(`Invoking handleRemoveBtnClick with listingId: ${id}`);
         try {
             // Retrieve all current listingids
-            fetch('/api/cart/?id=14')
+            fetch('/api/cart')
             .then(data => data.json())
             .then(async (data) => {
                 const currentListingIds = data.listingid;
@@ -42,7 +42,7 @@ const Cart = () => {
                 const updatedLisingIds = currentListingIds.filter(currentId => currentId !== currentListingIds[id]);
                 console.log('updatedOutput: ', updatedOutput);
                 console.log('updatedLisingIds: ', updatedLisingIds);
-                fetch(`/api/listing/?userId=14`, {
+                fetch(`/api/listing`, {
                     method: 'PATCH',
                     headers: {
                         "Content-Type": "application/json"
@@ -51,13 +51,13 @@ const Cart = () => {
                 })
                 .then(data => data)
                 .then(data => {
-                    fetch(`/api/cart/?id=14`)
+                    fetch(`/api/cart`)
                     .then(data => data.json())
                     .then(async (data) => {
                         const listingIds = data.listingid;
                         listingIds.sort((a, b) => a - b);
                         const jsonIds = JSON.stringify(listingIds);
-                        const rawItems = await fetch(`/api/listing/14?data=${jsonIds}`);
+                        const rawItems = await fetch(`/api/listing/userlisting?data=${jsonIds}`);
                         console.log('rawItems: ', rawItems);
                         const jsonData = await rawItems.json();
                         console.log('jsonData: ', jsonData);
@@ -81,14 +81,14 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        fetch('/api/cart/?id=14')
+        fetch('/api/cart')
         .then(data => data.json())
         .then(async (data) => {
             console.log('All listing ids in user cart: ', data);
             const listingIds = data.listingid;
             listingIds.sort((a, b) => a - b);
             const jsonIds = JSON.stringify(listingIds);
-            const rawItems = await fetch(`/api/listing/14?data=${jsonIds}`);
+            const rawItems = await fetch(`/api/listing/userlisting?data=${jsonIds}`);
             console.log('rawItems: ', rawItems);
             const jsonData = await rawItems.json();
             console.log('jsonData: ', jsonData);

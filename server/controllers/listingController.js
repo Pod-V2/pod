@@ -3,6 +3,7 @@ const pool = require('../db/models');
 const listingController = {};
 
 listingController.getAllListings = async (req, res, next) => {
+    console.log('>::: getting all listings');
     const client = await pool.connect()
         .catch(err => next({
             log: `listingController - pool connection failed ERROR: ${err}`,
@@ -20,7 +21,8 @@ listingController.getAllListings = async (req, res, next) => {
         // JOIN users u
         //   ON l.userid = u.userid;`;
 
-        const {id} = req.params;
+        // const {id} = req.params;
+        const id = req.cookies.userId;
 
         const listingsQuery = `SELECT l.product_title AS listing,
             l.price,
@@ -59,12 +61,15 @@ listingController.getListing = async (req, res, next) => {
             }
         }));
     try {
-        const { id } = req.params;
+        // const { id } = req.params;
+        const id = req.cookies.userId;
         if (!id) return next({
             log: `listingController.getListing - never received an ID in params ERROR : ${err}`,
             message: {
                 err: 'Error in listingController.getListing. Check server logs'
             }
+            // Should navigate to /login
+            
         });
         console.log(`passed in query parammm: ${id}`);
         // const getListingQuery = `SELECT l.product_title AS listing,
