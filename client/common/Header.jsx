@@ -75,6 +75,7 @@ export default function PrimarySearchAppBar() {
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
+            onClick={() => navigate('/home')}
           >
             POD V2
           </Typography>
