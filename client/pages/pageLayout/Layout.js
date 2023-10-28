@@ -34,10 +34,11 @@ const Pages = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/listing/" element={<AllListings/>}/>
           <Route path="/listing/create" element={<CreateListing />} />
           <Route path="/listing/update/:id" element={<UpdateListing />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/listing/details/:id" element={<ListingDetails/>} />
+          <Route path="/cart"  element={<Cart/>}/>
           <Route path="/ListingsByCategory/:category" element={<ListingsByCategory/>}/>
         </Routes>
       </Router>
