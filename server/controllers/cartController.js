@@ -120,8 +120,8 @@ cartController.updateUserCart = async (req, res, next) => {
             }
         }));
     try {
-
-        const { userId, listingId, qty } = req.query;
+        const userId = req.cookies.userId;
+        const { listingId, qty } = req.query;
         if (!userId || !listingId || !qty) return next({
             log: `cartController.updateUserCart - never received user and/or listing ID(s) and/or qty in query ERROR`,
             message: {
@@ -168,6 +168,7 @@ cartController.updateListingOfUserCart = async (req, res, next) => {
         const userId = req.cookies.userId;
         // const { userId } = req.query;
         const listingIds = req.body;
+        console.log('---listingIds: ', listingIds);
         if (!userId || !listingIds) return next({
             log: `cartController.updateListingOfUserCart - never received user and/or listing ID(s) and/or qty in query ERROR`,
             message: {

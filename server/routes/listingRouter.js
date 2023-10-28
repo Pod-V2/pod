@@ -19,6 +19,10 @@ router.post("/", listingController.createListing, (req, res) => {
     .json({ status: "success", message: "Successfully created new listing!" });
 });
 
+router.patch("/", cartController.updateListingOfUserCart, (req, res) => {
+  return res.status(200).json("Updated listingids of user cart");
+});
+
 router.patch("/id/:id", listingController.updateListing, (req, res) => {
   return res.status(200).json(res.locals.updatedListing);
 });

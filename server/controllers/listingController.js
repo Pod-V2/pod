@@ -107,6 +107,7 @@ listingController.getListing = async (req, res, next) => {
 
         if(ids.length) {
             const getListingQuery = `SELECT l.product_title AS listing,
+                l.listingid,
                 l.price,
                 l.category,
                 u.name AS seller,
@@ -115,7 +116,8 @@ listingController.getListing = async (req, res, next) => {
             FROM listings l
             JOIN users u
             ON l.userid = u.userid
-            WHERE l.listingid IN (${ids.join(',')});`;
+            WHERE l.listingid IN (${ids.join(',')})
+            ORDER BY l.listingid;`;
             // const response = await client.query(getListingQuery, [ ids ]);
             const response = await client.query(getListingQuery);
             // console.log('. query response: ', response);
@@ -242,7 +244,8 @@ listingController.updateListing = async (req, res, next) => {
             }
         }));
     try {
-        const { id } = req.params;
+        // const { id } = req.params;
+        const id = req.cookies.userId;
         if (!id) return next({
             log: `listingController.updateListing - never received an ID in params ERROR : ${err}`,
             message: {
