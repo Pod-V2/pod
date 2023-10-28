@@ -1,9 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Categories from "./components/category";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {BiSearch} from "react-icons/bi"
 import styled from "styled-components";
+import Footer from "../../common/Footer"
+import Header from "../../common/Header"
 
 /**
  * Redirect to this page upon clicking one of the category buttons from the categories component, GET the listings from the category that was drilled
@@ -15,6 +17,11 @@ const ListingsByCategory = (props) =>{
     // GET /api/listings/
     const { category } = useParams();
     const [listings, setListings] = useState([]);
+    const navigate = useNavigate();
+
+    function handleClickListing(i){
+      navigate(`/listing/details/${listings[i].listingid}`)
+    }
 
     useEffect(()=> {
       fetch(`/api/listing/category/${category}`)
@@ -45,7 +52,7 @@ const ListingsByCategory = (props) =>{
       <p></p>
       <p></p>
       
-      <Button>{element.listing}</Button>
+      <Button onClick={() => {handleClickListing(i)}}>{element.listing}</Button>
   </Box>
 })
           }
@@ -90,6 +97,7 @@ transition: 0.2s;
 
 @media(max-width: 1020px) {
   
+
 }`
 
 const Button = styled.button`
@@ -99,7 +107,10 @@ border: none;
 color: blue;
 background-color: #F7F7F7;
 `
-
+const PageContainer = styled.div`
+background-color: #F0F0F0,
+min-height: 100%
+`
 
 
 

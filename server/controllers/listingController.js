@@ -59,7 +59,8 @@ listingController.getListing = async (req, res, next) => {
             l.category,
             u.name AS seller,
             l.img_url,
-            l.description
+            l.description,
+            l.listingid
         FROM listings l
         JOIN users u
             ON l.userid = u.userid
@@ -103,7 +104,8 @@ listingController.getListingsByCategory = async (req, res, next) => {
             l.category,
             u.name AS seller,
             l.img_url,
-            l.description
+            l.description,
+            l.listingid
         FROM listings l
         JOIN users u
             ON l.userid = u.userid
