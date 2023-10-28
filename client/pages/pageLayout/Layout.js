@@ -22,7 +22,6 @@ const Pages = () => {
           <Route path="/home" element={<Home />} />
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<SignUp/>}/>
-          <Route path='/listing/:id' element={<AllListings/>}/>
           <Route path="/listing/details/:id" element={<ListingDetails/>} />
           <Route path="/cart"  element={<Cart/>}/>
           <Route path="/listing/create" element={<CreateListing />} />
