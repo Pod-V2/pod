@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -35,6 +37,7 @@ export const ListingInputsImage = (props) => {
   const [inputs, setInputs] = useState({});
   const { imageUrl, setImageUrl } = props;
   const [tempFileUrl, setFileUrl] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (event) => {
     setInputs(event.target.files);
@@ -67,6 +70,7 @@ export const ListingInputsImage = (props) => {
           setImageUrl(data.url);
           console.log("Image URL");
           console.log(imageUrl);
+          setSuccess(true);
         })
         .catch((error) => console.error(error));
     }),
@@ -132,6 +136,11 @@ export const ListingInputsImage = (props) => {
           )}
         </Box>
       </Box>
+      <Stack sx={{ width: "100%" }} >
+        {success && (
+          <Alert severity="success">Image successfully uploaded!</Alert>
+        )}
+      </Stack>
     </>
   );
 };
